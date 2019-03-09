@@ -1,4 +1,4 @@
-@extends('layouts.super-admin')
+@extends('layouts.teachers')
 @section('content')
   <!-- Page Content -->
   <div id="page-wrapper">
@@ -12,6 +12,7 @@
           <ol class="breadcrumb">
             <?php $currentSeason = DB::table('seasons')->where('current', 1)->first(); ?>
             <li><a href="{{ url('super-admin/dashboard')}}">Dashboard</a></li>
+            <li><a href="{{ url('/teacher/students')}}"><i class="ti-back-left"></i>see all Students</a></li>
             <li class="active">{{$currentSeason->session}} |{{($currentSeason->term_no)}}|</li>
           </ol>
         </div>
@@ -94,7 +95,7 @@
               <div class="form-group form-horizontal">
                 <label class="col-md-12">Comments<span class="help"> e.g Your Observations, things student should work on</span></label>
                 <div class="col-md-12">
-                  <textarea class="form-control form-control-line" name="comment">{{$studentSummary->comment}}</textarea>
+                  <textarea class="form-control form-control-line" name="comments">{{$studentSummary->comments}}</textarea>
                 </div>
               </div>
               <div class="form-group">

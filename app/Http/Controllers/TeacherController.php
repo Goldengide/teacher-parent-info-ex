@@ -83,15 +83,11 @@ class TeacherController extends Controller
     public function addCommentToStudentResult(Request $request) {
         $id = $request->id;
         $student = StudentSummary::find($id);
-        $student->parent_name = $request->parent_name;
-        $student->student_name = $request->student_name;
-        $student->phone = $request->phone;
-        $student->email = $request->email;
-
+        $student->comments = nl2br($request->comments);
         $isSaved = $student->save();
 
         if ($isSaved) {
-            return redirect()->back()->with(['message'=> 'Student Info Successfully Updated', 'style' => 'alert-success']);
+            return redirect()->back()->with(['message'=> 'Comment has been succesfuly added', 'style' => 'alert-success']);
         }
         else {
             return redirect()->back()->with(['message'=> 'Ooops an error occured', 'style' => 'alert-danger']);
@@ -222,7 +218,7 @@ class TeacherController extends Controller
     public function updateStudentAction(Request $request) {
     	$id = $request->id;
     	$student = Student::find($id);
-    	$student->parent_name = $request->parent_name;
+    	// $student->parent_name = $request->parent_name;
     	$student->student_name = $request->student_name;
     	$student->phone = $request->phone;
     	$student->email = $request->email;
@@ -430,6 +426,13 @@ class TeacherController extends Controller
         $results = $resultObject->orderBy('subject')->get();
         return view('pages.teacher-students-result-index', compact('results', 'summary'));
     }
+
+    public function sendAdminMessagePage(){
+        $adminPhone = User::where('role', 'admin')->first()->phone;
+        // $adminPhone = implode(',', $adminPhone);
+        return view('pages.teacher-message-compose', compact('adminPhone'));
+    }
+    // public function sendAdminMessageAction(Request $request){}
 
     
 }

@@ -9,7 +9,7 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
           <ol class="breadcrumb">
             <li><a href="{{ url('/teacher/dashboard')}}">Dashboard</a></li>
-            <li><a href="{{ url('/teacher/student')}}">Back to the Student's List</a></li>
+            <li><a href="{{ url('/teacher/parents')}}"><i class="ti-back-left"></i>see all parents</a></li>
             <li class="active"> {{ $parent->fullname }} </li>
           </ol>
         </div>
@@ -61,7 +61,7 @@
         <div class="col-sm-12 col-md-12">
           <div class="white-box p-l-20 p-r-20">
             <div class="row">
-              <form class="form-material form-horizontal" method="post" action="{{url('parent/message/send')}}">
+              <form class="form-material form-horizontal" method="post" action="{{url('teacher/message/send')}}">
                 {{csrf_field()}}
                 <input type="hidden" name="user_id" value="{{$parent->id}}">
                 <input type="hidden" name="to" value="{{$parent->phone}}">

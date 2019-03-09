@@ -86,7 +86,7 @@
                 <dt style="text-align: left; white-space: normal;">Email: </dt> <dd>{{ $child->email }}</dd> <br></br>
 
                 @if($isProcessedResult)
-                  <a href="{{ url('parent/result/student/'. $season->id .'/'. $student->class_id .'/'. $student->id) }}">Check Result</a>
+                  <a href="{{ url('parent/result/student/'. $season->id .'/'. $child->class_id .'/'. $child->id) }}">Check Result</a>
                 @endif
               </dl>
             </div>

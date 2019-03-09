@@ -66,38 +66,6 @@
                 </div>
                 
                 <ul class="nav navbar-top-links navbar-right pull-right">
-                    <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><i class="icon-bell"></i>
-          <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
-          </a>
-                        <ul class="dropdown-menu mailbox scale-up">
-                            <li>
-                                <div class="drop-title">You have 30 new notifications</div>
-                            </li>
-                            <li>
-                                <div class="message-center">
-                                        <a href="{{ url('#') }}">
-                                            <!-- <div class="user-img"> 
-                                                @if(Auth::user()->pics_url == NULL)
-                                                <img src="{{ URL::asset("plugins/images/users/pawandeep.jpg") }}" alt="user" class="img-circle"> 
-                                                @else
-                                                <img src="{{ URL::asset(Auth::user()->pics_url) }}" alt="user" class="img-circle">
-                                                @endif 
-                                                <span class="profile-status online pull-right"></span> 
-                                            </div> -->
-                                            <div class="mail-contnet">
-                                                <h5>Gideon</h5> 
-                                                <span class="mail-desc">It is Gideon</span> 
-                                                <span class="time">9:30 AM</span> 
-                                            </div>
-                                        </a>
-                                </div>
-                            </li>
-                            <li>
-                                <!-- <a class="text-center" href="{{ url('/tip/notification') }}"> <strong>See all notifications</strong> <i class="fa fa-angle-right"></i> </a> -->
-                            </li>
-                        </ul>
-                        <!-- /.dropdown-messages -->
-                    </li>
                     
                     <!-- /.dropdown -->
                     <li class="dropdown">
@@ -112,9 +80,17 @@
                             <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
                             <li role="separator" class="divider"></li> -->
                             <li>
-                                <a href="{{ url('logout') }}"><i class="fa fa-power-off"></i> Logout</a>
+                                <a href="{{ url('logout') }}"
+                                    onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
                                     
-                                </li>
+                            </li>
 
                         </ul>
                         <!-- /.dropdown-user -->
@@ -133,7 +109,7 @@
                 <ul class="nav" id="side-menu">
                     
                     <li class="nav-small-cap m-t-10">--- Main Menu</li>
-                    <li> <a href="{{url("super-admin/dashboard")}}" class="waves-effect active"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> Dashboard </a>
+                    <li> <a href="{{url("super-admin/dashboard")}}" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> Dashboard </a>
                     </li>
                   
                     <li>
@@ -159,38 +135,41 @@
                     </li>
                     <li>
                         <a href="{{url("/super-admin/students/all")}}" class="waves-effect">
-                            <i class="icon icon-user"></i> 
+                            <i class="icon ti-user"></i> 
                             <span class="hide-menu">Students</span>
                         </a>
                     </li>
                      <li>
                         <a href="{{url("/super-admin/subjects")}}" class="waves-effect">
-                            <i class="icon icon-user"></i> 
+                            <i class="icon-notebook"></i> 
                             <span class="hide-menu">Subject</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{url("/super-admin/classes")}}" class="waves-effect">
-                            <i class="icon icon-user"></i> 
+                            <i class=" ti-blackboard"></i> 
                             <span class="hide-menu">Classes</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{url("/super-admin/seasons")}}" class="waves-effect">
-                            <i class="icon icon-user"></i> 
+                            <i class="wi wi-day-sleet"></i> 
                             <span>Seasons</span>
                         </a>
                     </li>
                    
                     <li>
-                        <a href="{{ url('/logout')}}">
-
-                            <i class="icon-logout fa-fw"></i> 
-                            <span class="hide-menu">Logout</span>
-                            
+                        <a href="{{ url('logout') }}"
+                            onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                            Logout
                         </a>
+
+                        <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
                     </li>
                 </ul>
             </div>

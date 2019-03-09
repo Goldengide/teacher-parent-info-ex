@@ -32,7 +32,7 @@ Route::post('/logina', 'Auth\LoginController@loginPost');
 
 
 # Parent Module
-Route::group(['middleware' => 'auth', 'prefix' => 'parent'], function() {
+Route::group(['middleware' => ['auth', 'can:parent'], 'prefix' => 'parent'], function() {
  
 	Route::get('/dashboard', 'ParentController@dashboard');
 	Route::get('/child/profile', 'ParentController@dashboard');
@@ -44,7 +44,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'parent'], function() {
 	Route::get('/result/student/{seasonId}/{classId}/{studentId}', 'ParentController@viewStudentResult');
 	
 	Route::group(['prefix' => 'message'], function() {
-		Route::post('/send', 'SMSController@sendParentMessage');
+		Route::post('/send', 'SMSController@sendteacherMessage');
+		Route::get('/compose', 'TeacherController@sendAdminMessagePage');
 	});
 
 });
@@ -62,7 +63,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'teacher'], function() {
 	Route::get('/students/new', 'TeacherController@addStudentPage');
 	Route::post('/students/new', 'TeacherController@addStudentAction');
 
-	Route::get('/students/add-comment', 'TeacherController@addCommentToStudentResult');
+	Route::post('/students/add-comment', 'TeacherController@addCommentToStudentResult');
 
 	Route::get('/students/edit/{id}', 'TeacherController@updateStudentPage');
 	Route::post('/students/edit', 'TeacherController@updateStudentAction');
@@ -101,13 +102,14 @@ Route::group(['middleware' => 'auth', 'prefix' => 'teacher'], function() {
 
 	Route::group(['prefix' => 'message'], function() {
 		Route::post('/send', 'SMSController@sendTeacherMessage');
+		Route::get('/compose', 'TeacherController@sendAdminMessagePage');
 	});
 
 });
 
 	
 # SuperAdmin module
-Route::group(['middleware' => 'auth', 'prefix' => 'super-admin'], function() {
+Route::group(['middleware' => ['auth', 'can:super-admin'], 'prefix' => 'super-admin', ''], function() {
 
 	Route::get('/dashboard', 'AdminController@dashboard');
 

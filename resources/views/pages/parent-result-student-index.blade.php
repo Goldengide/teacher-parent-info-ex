@@ -21,7 +21,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="white-box">
-            <h3 class="box-title m-b-0"><a href="">{{Download PDF}}</a></h3>
+            <h3 class="box-title m-b-0"><a href="#">Download PDF</a></h3>
             <h3 class="box-title m-b-0">{!! $season->sequenceNumber($season->term_no) !!} Term {{$season->session}} Report Sheet </h3>
             <h3 class="box-title m-b-0">{{ $student->student_name }}</h3>
             <h3 class="box-title m-b-0">Class: {{$class->name}}</h3>
@@ -68,7 +68,7 @@
                     <td>{{$result->student($result->student_id)->student_name}}</td>
                     <td>{{$result->assessment}}</td>
                     <td>{{$result->exam_score}}</td>
-                    <td>{{intval($result->assessment) + intval($result->exam_score)}}</td>
+                    <td>{{ $result->total }}</td>
                     <!-- <td> -->
                       <!-- <a href="{{url('super-admin/result/edit/'. $result->id)}}" class="text-info"><i class="icon icon-pencil"></i></a>   -->
                         <!-- <a href="{{url('teacher/result/view/'. $result->id )}}" class="text-info"><i class="ti-user"></i>View Result</a> -->
@@ -90,6 +90,7 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="white-box">
+              <h3>Teacher Comments</h3>
               <span class="text-info">{{$studentSummary->comment}}</span>
             </div>
           </div>

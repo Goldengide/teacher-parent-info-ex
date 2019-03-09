@@ -1,4 +1,4 @@
-@extends('layouts.super-admin')
+@extends('layouts.parent')
 @section('content')
   <!-- Page Content -->
   <div id="page-wrapper">

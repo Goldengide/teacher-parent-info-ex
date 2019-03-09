@@ -8,11 +8,10 @@
           <h4 class="page-title">...</h4>
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-          <!-- <a href="https://themeforest.net/item/elite-admin-responsive-dashboard-web-app-kit-/16750820" target="_blank" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Buy Now</a> -->
-          <ol class="breadcrumb">
-            <!-- <li><a href="#">Dashboard</a></li> -->
-            <!-- <li><a href="#">Teacher</a></li> -->
-            <!-- <li class="active">Student Index Page</li> -->
+           <ol class="breadcrumb">
+            <?php $currentSeason = DB::table('seasons')->where('current', 1)->first(); ?>
+            <li><a href="{{ url('teacher/dashboard')}}">Dashboard</a></li>
+            <li class="active">{{$currentSeason->session}} |{{($currentSeason->term_no)}}|</li>
           </ol>
         </div>
         <!-- /.col-lg-12 -->

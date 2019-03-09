@@ -10,6 +10,7 @@ use App\Student;
 use App\Season;
 use App\StudentSummary;
 use App\Result;
+use App\ClassTable;
 use App\StudentDetail;
 use Auth;
 
@@ -19,10 +20,18 @@ class ParentController extends Controller
     public function dashboard() {
         $children = Student::where('parent_name', Auth::user()->fullname)->get();
         $countChildren = Student::where('parent_name', Auth::user()->fullname)->count();
+        $season = Season::where('current', true)->first();
         // return $countChildren;
         if($countChildren == 1) {
             $child = $children[0];
-            return view('pages.parent-students-profile', compact('child', 'countChildren'));
+            $processedResult = StudentSummary::where('class_id', $child->class_id)->where('season_id', $season->id)->count();
+            if($processedResult > 0) {
+                $isProcessedResult = true;
+            }
+            else {
+                $isProcessedResult = false;
+            }
+            return view('pages.parent-students-profile', compact('child', 'countChildren', 'isProcessedResult', 'season'));
         }
         else if($countChildren > 1) {
             return view('pages.parent-students-index', compact('children', 'countChildren'));
@@ -123,6 +132,12 @@ class ParentController extends Controller
         $children = Student::where('parent_name', Auth::user()->fullname)->get();
         $countChildren = Student::where('parent_name', Auth::user()->fullname)->count();
         return view('pages.parent-students-index', compact('children', 'countChildren'));
+    }
+
+    public function sendAdminMessagePage(){
+        $adminPhone = User::where('role', 'admin')->first()->phone;
+        // $adminPhone = implode(',', $adminPhone);
+        return view('pages.parent-message-compose', compact('adminPhone'));
     }
 
    

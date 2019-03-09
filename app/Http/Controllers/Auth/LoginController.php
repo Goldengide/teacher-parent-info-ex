@@ -41,7 +41,10 @@ class LoginController extends Controller
     }
 
     public function loginPost(Request $request) {
-        if(Auth::attempt(['phone'=>$request->input('phone'), 'password'=>$request->input('password') ]))
+        if($request->input('remember') == null) { $remember = 0;}
+        else {$remember = $request->input('remember'); }
+        // return $request->input('remember');
+        if(Auth::attempt(['phone'=>$request->input('phone'), 'password'=>$request->input('password') ], $remember))
         {
             if(Auth::user() && Auth::user()->role == "admin")
             {

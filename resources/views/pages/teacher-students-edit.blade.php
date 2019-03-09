@@ -6,13 +6,14 @@
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
           <h4 class="page-title">...</h4>
         </div>
-        <!-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-          <ol class="breadcrumb">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Events</a></li>
-            <li class="active">Add Event</li>
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+           <ol class="breadcrumb">
+            <?php $currentSeason = DB::table('seasons')->where('current', 1)->first(); ?>
+            <li><a href="{{ url('teacher/dashboard')}}">Dashboard</a></li>
+            <li><a href="{{ url('/teacher/students')}}"><i class="ti-back-left"></i>see all Students</a></li>
+            <li class="active">{{$currentSeason->session}} |{{($currentSeason->term_no)}}|</li>
           </ol>
-        </div> -->
+        </div>
         <!-- /.col-lg-12 -->
       </div>
       <!-- .row -->
@@ -50,12 +51,12 @@
                       <input type="text" class="form-control form-control-line" name="student_name" value="{{$student->student_name}}">
                     </div>
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label class="col-md-12">Parent's Name<span class="help"> e.g Mr & Mrs. Awosanmi</span></label>
                     <div class="col-md-12">
                       <input type="text" class="form-control form-control-line" name="parent_name" value="{{$student->parent_name}}">
                     </div>
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <label class="col-md-12">Phone Number</label>
                     <div class="col-md-12">
@@ -71,7 +72,8 @@
                   
                   <div class="form-group">
                     <div class="col-md-12">
-                      <button type="submit" class="btn btn-lg btn-success">Submit</button>
+                      <button type="submit" class="btn btn-md btn-success">Submit</button>
+                      <a href="{{ url('/teacher/students/profile/'. $student->id)}}" class="btn btn-md btn-primary">View Profile</a>
                     </div>
                   </div>
                 </form>

@@ -40,7 +40,7 @@ class LoginController extends Controller
 
 
     public function loginPost(Request $request) {
-        if(Auth::attempt(['phone'=>$request->input('phone'), 'password'=>$request->input('password') ]))
+        if(Auth::attempt(['phone'=>$request->input('phone'), 'password'=>$request->input('password') ], $remember))
         {
             if(Auth::user() && Auth::user()->role == "admin")
             {
