@@ -10,9 +10,14 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
           <!-- <a href="https://themeforest.net/item/elite-admin-responsive-dashboard-web-app-kit-/16750820" target="_blank" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Buy Now</a> -->
           <ol class="breadcrumb">
-            <li><a href="{{ url('/super-admin/dashboard')}}">Dashboard</a></li>
-            <!-- <li><a href="#">Teacher</a></li> -->
-            <li class="active">{{$activeSeason->session}}</li>
+            <?php $currentSeason = DB::table('seasons')->where('current', 1)->first(); $seasonIsSet = DB::table('seasons')->where('current', 1)->count();?>
+            <li><a href="{{ url('super-admin/dashboard')}}">Dashboard</a></li>
+            @if(!$seasonIsSet)
+              <li class="active">---</li>
+              
+            @else
+              <li class="active">{{$currentSeason->session}} |{{$currentSeason->term_no}}|</li>
+            @endif
           </ol>
         </div>
         <!-- /.col-lg-12 -->
@@ -21,60 +26,41 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="white-box">
-            <h3 class="box-title m-b-0">Parents</h3>
-            @if(!$isParentExtracted)
-            
-              <p class="text-muted m-b-30"><a href="{{url('/super-admin/parent/extract')}}">Extract Parents</a></p>
-            
-            @endif
-
-            <!-- <p class="text-muted m-b-30"><a href="{{url('/super-admin/parent/new')}}">Add New Parents</a></p> -->
-            @if(Session::has('message'))
-
-              <p class="{{session('style')}}">{{session('message')}}</p>
-
-            @endif
+            <h3 class="box-title m-b-0">Students</h3>
             <div class="table-responsive">
-            <table id="myTable" class="table table-striped">
-              <thead>
-                <tr>
-                  <th>S/N</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>S/N</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Action</th>
-                </tr>
-              </tfoot>
-              <tbody> <?php $sn = 0 ?>
-                @if(count($parents) < 1)
-                  <td colspan="5">No parent data has been uploaded so far. Please upload</td>
-                @else
-                  @foreach($parents as $parent)
-                  <tr>  <?php $sn++; ?>
-                    <td>{{$sn}}</td>
-                    <td>{{ $parent->fullname }}</td>
-                    <td>{{$parent->email}}</td>
-                    <td>{{$parent->phone}}</td>
-                    <td>
-                      <a href="{{url('super-admin/parent/profile/'. $parent->id)}}" class="text-primary"><i class="icon icon-user"></i></a>
-                       | 
-                      <a href="{{url('super-admin/parent/edit/'. $parent->id)}}" class="text-primary"><i class="icon icon-pencil"></i></a>
-                    </td> 
-                    
+              <table id="myTable" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Class </th>
+                    <th>Student Name</th>
+                    <th>Parent Name</th>
+                    <th>Score</th>
                   </tr>
-                  @endforeach
-                @endif
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  @if(count($bestStudents) < 1)
+                    <td colspan="5">No student data has been uploaded so far. Please upload</td>
+                  @else
+                    @foreach($bestStudents as $bestStudent)
+                    <tr>
+                      <td>{{ $bestStudent->student($bestStudent->student_id)->classTable($bestStudent->student($bestStudent->student_id)->class_id)->name }}</td>
+                      <td>{{$bestStudent->student($bestStudent->student_id)->student_name}}</td>
+                      <td>{{$bestStudent->student($bestStudent->student_id)->parent_name}}</td>
+                      <td>{{$bestStudent->percentage}}</td>
+                      
+                    </tr>
+                    @endforeach
+                  @endif
+                </tbody>
+                <thead>
+                  <tr>
+                    <th>Class </th>
+                    <th>Student Name</th>
+                    <th>Parent Name</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+              </table>
             </div>
           </div>
         </div>
@@ -92,8 +78,11 @@
   <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+
   <script>
       $(document).ready(function(){
+
+
         $('#myTable').DataTable();
         $(document).ready(function() {
           var table = $('#example').DataTable({

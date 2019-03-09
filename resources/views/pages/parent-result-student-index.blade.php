@@ -21,7 +21,10 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="white-box">
-            <h3 class="box-title m-b-0">Student: {{ $student->student_name }}</h3>
+            <h3 class="box-title m-b-0"><a href="">{{Download PDF}}</a></h3>
+            <h3 class="box-title m-b-0">{!! $season->sequenceNumber($season->term_no) !!} Term {{$season->session}} Report Sheet </h3>
+            <h3 class="box-title m-b-0">{{ $student->student_name }}</h3>
+            <h3 class="box-title m-b-0">Class: {{$class->name}}</h3>
             
             @if(Session::has('message'))
 
@@ -81,6 +84,18 @@
         </div>
       </div>
       <!-- /.row -->
+
+      @if(trim($studentSummary->comment) != "")
+        <!-- row -->
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="white-box">
+              <span class="text-info">{{$studentSummary->comment}}</span>
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+      @endif
 @endsection
 
 @section('other-styles')

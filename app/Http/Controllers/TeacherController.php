@@ -13,6 +13,7 @@ use App\Subject;
 use App\User;
 use App\Season;
 use App\Result;
+use App\StudentSummary;
 use App\StudentDetail;
 use App\Repository\DataRepository;
 
@@ -65,6 +66,8 @@ class TeacherController extends Controller
 
     public function viewStudentResult($seasonId, $classId, $studentId) {
         $student = Student::where('id', $studentId)->first();
+        $season = Season::where('id', $seasonId)->first();
+        $class = ClassTable::where('id', $classId)->first();
         $studentSummary = StudentSummary::where('season_id', $seasonId)
                                         ->where('class_id', $classId)
                                         ->where('student_id', $studentId)
@@ -74,8 +77,25 @@ class TeacherController extends Controller
                                 ->where('student_id', $studentId)
                                 ->get();
 
-        return view('pages.teacher-result-student-index', compact('results', 'studentSummary', 'student'));
+        return view('pages.teacher-result-student-index', compact('results', 'studentSummary', 'student', 'season', 'class'));
 
+    }
+    public function addCommentToStudentResult(Request $request) {
+        $id = $request->id;
+        $student = StudentSummary::find($id);
+        $student->parent_name = $request->parent_name;
+        $student->student_name = $request->student_name;
+        $student->phone = $request->phone;
+        $student->email = $request->email;
+
+        $isSaved = $student->save();
+
+        if ($isSaved) {
+            return redirect()->back()->with(['message'=> 'Student Info Successfully Updated', 'style' => 'alert-success']);
+        }
+        else {
+            return redirect()->back()->with(['message'=> 'Ooops an error occured', 'style' => 'alert-danger']);
+        }
     }
 
 

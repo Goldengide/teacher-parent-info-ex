@@ -65,7 +65,8 @@
                     <td>{{$student->email}}</td>
                     <td>{{$student->phone}}</td>
                     <td>
-                      <a href="{{url('super-admin/students/edit/'. $student->id)}}" class="text-primary"><i class="icon icon-pencil"></i></a>
+                      <a href="{{url('super-admin/student/edit/'. $student->id)}}" class="text-primary"><i class="icon icon-pencil"></i></a>
+                      <a href="{{url('super-admin/student/profile/'. $student->id)}}" class="text-primary"><i class="icon icon-user"></i></a>
                     </td> 
                     
                   </tr>

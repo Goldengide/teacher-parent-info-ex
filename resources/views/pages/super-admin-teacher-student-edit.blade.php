@@ -55,12 +55,12 @@
                       <input type="text" class="form-control form-control-line" name="student_name" value="{{$student->student_name}}">
                     </div>
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label class="col-md-12">Parent's Name<span class="help"> e.g Mr & Mrs. Awosanmi</span></label>
                     <div class="col-md-12">
                       <input type="text" class="form-control form-control-line" name="parent_name" value="{{ $student->parent_name }}">
                     </div>
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <label class="col-md-12">Phone Number</label>
                     <div class="col-md-12">

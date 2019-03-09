@@ -9,7 +9,7 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
           <ol class="breadcrumb">
             <li><a href="{{ url('/super-admin/dashboard')}}">Dashboard</a></li>
-            <li><a href="{{ url('/super-admin/students  ')}}">Back to the Student's List</a></li>
+            <li><a href="{{ url('/super-admin/parents')}}">see all Parents</a></li>
             <li class="active"> {{ $parent->fullname }} </li>
           </ol>
         </div>

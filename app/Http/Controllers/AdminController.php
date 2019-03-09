@@ -25,7 +25,9 @@ class AdminController extends Controller
     public function dashboard() {
     	$noOfStudents = Student::count();
     	$noOfTeachers = User::where('role', 'teacher')->count();
+        $season = Season::where('current', 1)->first();
         $countClassSummary = ClassSummary::count();
+        $countStudentSummary = StudentSummary::count();
         if($countClassSummary > 0) {
             $maxPerformance = ClassSummary::max('average_performance');
             $mostEffectiveTeacherClassId = ClassSummary::where('average_performance', $maxPerformance)->first()->class_id;
@@ -38,13 +40,26 @@ class AdminController extends Controller
             $mostEffectiveTeacher = "";
         }
 
+        if($countStudentSummary > 0) {
+            $overallMaxScore = StudentSummary::where('class_id', $class->id)
+                                        ->where('season_id', $season->id)
+                                        ->max('percentage');
+            $bestOverallStudent = StudentSummary::where('percentage', $overallMaxScore)
+                                    ->where('class_id', $class->id)
+                                    ->where('season_id', $season->id)
+                                    ->first();
+        }
+        else {
+            $bestOverallStudent = "";
+        }
+
 
         // $findBestStudent = StudentSummary::where('')->get()
         // $bestStudnent = 
 
 
 
-    	return view('pages.super-admin-dashboard', compact('noOfStudents', 'noOfTeachers', 'mostEffectiveTeacher'));
+    	return view('pages.super-admin-dashboard', compact('noOfStudents', 'noOfTeachers', 'mostEffectiveTeacher', 'bestOverallStudent', 'season'));
     }
 
     // public function index
@@ -78,7 +93,7 @@ class AdminController extends Controller
                             $dataColumns['lastname'] = $contentSubArray[1]; 
                             $dataColumns['firstname'] = $contentSubArray[2]; 
                             $dataColumns['othernames'] = $contentSubArray[3]; 
-                            $dataColumns['fullname'] = strtoupper($contentSubArray[1]). ", ". $contentSubArray[2]. " ". $contentSubArray[3]; 
+                            $dataColumns['fullname'] = strtoupper($contentSubArray[1]). " ". $contentSubArray[2]. " ". $contentSubArray[3]; 
                             $dataColumns['role'] = 'teacher'; 
                             // $dataColumns['password'] = bcrypt(trim(strtolower($contentSubArray[1]))); 
                             $dataColumns['password'] = bcrypt(trim(strtolower($contentSubArray[1]))); 
@@ -118,9 +133,11 @@ class AdminController extends Controller
         else {
         	$parents = User::where('role', 'parent')->get();
         	$countParents = User::where('role', 'parent')->count();
+            if($countParents > 0) {$isParentExtracted = true;}
+            else {$isParentExtracted = false;}
             $currentSeason = Season::where('current', 1)->first();
             $activeSeason = Season::where('status', 1)->first();
-        	return view('pages.super-admin-parent-list', compact('parents', 'countParents', 'currentSeason', 'activeSeason'));
+        	return view('pages.super-admin-parent-list', compact('parents', 'countParents', 'currentSeason', 'activeSeason', 'isParentExtracted'));
             }
     }
 
@@ -284,10 +301,15 @@ class AdminController extends Controller
         $student->student_name = $request->student_name;
         $student->phone = $request->phone;
         $student->gender = $request->gender;
-        $student->phone = $request->phone;
+        $student->email = $request->email;
         $student->class_id = $request->class;
         $student->save();
         if ($student) {
+            $parent = new User;
+            $parent->fullname = $request->parent_name;
+            $parent->phone = $request->phone;
+            $parent->email = $request->email;
+            $parent->save();
             return redirect()->back()->with(['message' => "Student has been added", 'style' => "alert-success"]);
         }
         else {
@@ -304,7 +326,7 @@ class AdminController extends Controller
     public function editStudentAction(Request $request) {
         $id = $request->id;
         $student = Student::find($id);
-        $student->parent_name = $request->parent_name;
+        // $student->parent_name = $request->parent_name;
         $student->student_name = $request->student_name;
         $student->phone = $request->phone;
         $student->gender = $request->gender;
@@ -387,6 +409,7 @@ class AdminController extends Controller
     public function students() {
         $countClasses = ClassTable::count(); 
         $students = Student::all();
+        
         // return $students;
         return view('pages.super-admin-teacher-students-index', compact('students', 'countClasses'));
     }
@@ -403,10 +426,6 @@ class AdminController extends Controller
         $students = Student::where("class_id", $classId)->get();
         $class = ClassTable::where('id', $class_id)->first();
         // get format and enter some name with some parent Id make sure that it well coded in a way it won't be discovered
-    }
-
-    public function newStudents() {
-        // get format for this one too //when is that? it should be now
     }
 
     
@@ -449,16 +468,26 @@ class AdminController extends Controller
 
     
     public function updateParentPage($id) {
-    	$teacher = User::where('id', $id)->first();
-    	return view('pages.super-admin-parent-update', compact('parent'));
+    	$parent = User::where('id', $id)->first();
+        $name_title = explode('|', $parent->fullname);
+        $title = $name_title[0];
+        $names = explode(" ", trim($name_title[1]));
+        // return $names;
+        $parent->title = $title;
+        $parent->lastname = $names[0];
+        $parent->firstname = $names[1];
+        $parent->othernames = $names[2];
+        $parent->fullname = strtoupper($names[0]). " ". $names[1]. " ". $names[2];
+    	return view('pages.super-admin-parent-edit', compact('parent'));
     }
     public function updateParentAction(Request $request) {
     	$id = $request->id;
     	$user = User::find($id);
     	$user->firstname = $request->firstname;
-    	$user->lastname = $request->lastname;
-    	$user->role = 'parent';
     	$user->othernames = $request->othernames;
+        $user->lastname = $request->lastname;
+        $user->fullname = $request->fullname;
+        $user->role = 'parent';
     	$user->email = $request->email;
     	$user->phone = $request->phone;
     	// $user->phone2 = $request->phone2;
@@ -694,11 +723,12 @@ class AdminController extends Controller
 
     public function subjectsForResult($seasonId, $classId) {
         $subjects = Subject::all();
+        $subjectCount = Subject::count();
         $season = Season::where('id', $seasonId)->first();
         $class = ClassTable::where('id', $classId)->first();
         $results = true;
-        $check1 = StudentDetail::orderBy('subject_id')->pluck('subject_id')->unique()->values()->all();
-        $check2 = Result::orderBy('subject_id')->pluck('subject_id')->unique()->values()->all();
+        $check1 = StudentDetail::where('class_id', $classId)->orderBy('subject_id')->pluck('subject_id')->unique()->values()->all();
+        $check2 = Result::where('class_id', $classId)->orderBy('subject_id')->pluck('subject_id')->unique()->values()->all();
         // return $check1;
         $overallSubjects = count($check1);
         $uploadedSubjectsResult = count($check2);
@@ -711,7 +741,7 @@ class AdminController extends Controller
             $isProcessedResult = false;
         }
 
-        if ($overallSubjects == $uploadedSubjectsResult) {
+        if ($overallSubjects == $uploadedSubjectsResult && $overallSubjects == $subjectCount ) {
             $isAllResultsHasBeenUploadedForEachStudent = 1;
         }
         else {
@@ -719,7 +749,7 @@ class AdminController extends Controller
         }
         // return $isAllResultsHasBeenUploadedForEachStudent;
 
-        return view('pages.super-admin-subject-index', compact('subjects', 'class', 'season', 'results', 'isAllResultsHasBeenUploadedForEachStudent', 'overallSubjects', 'uploadedSubjectsResult', 'isProcessedResult'));
+        return view('pages.super-admin-subject-index', compact('subjects', 'class', 'season', 'results', 'isAllResultsHasBeenUploadedForEachStudent', 'overallSubjects', 'uploadedSubjectsResult', 'isProcessedResult', 'subjectCount'));
     }
 
     public function resultIndex($seasonId, $classId, $subjectId) {
@@ -738,8 +768,21 @@ class AdminController extends Controller
         return view('pages.super-admin-result-index', compact('results', 'subject', 'class', 'season', 'resultAverage', 'resultInfo'));
     }
 
-    public function resultSummary() {
+    public function resultSummary($seasonId) {
+        $bestStudents = [];
+        $classIds = StudentSummary::pluck('class_id')->unique()->all();
 
+        $studentSummaries = StudentSummary::where('season_id', $seasonId)
+                                ->orderBy('student_id')
+                                ->orderBy('class_id')
+                                ->take(count($classIds))
+                                ->get();
+
+        foreach ($studentSummaries as $studentSummary) {
+            $bestStudents[] = $studentSummary->getBestStudents($studentSummary->class_id, $studentSummary->season_id);
+        }
+        // return $bestStudents;
+        return view('pages.super-admin-best-students', compact('bestStudents'));
     }
 
     public function bestStudents() {
@@ -748,6 +791,8 @@ class AdminController extends Controller
 
     public function viewStudentResult($seasonId, $classId, $studentId) {
         $student = Student::where('id', $studentId)->first();
+        $season = Season::where('id', $seasonId)->first();
+        $class = ClassTable::where('id', $classId)->first();
         $studentSummary = StudentSummary::where('season_id', $seasonId)
                                         ->where('class_id', $classId)
                                         ->where('student_id', $studentId)
@@ -757,7 +802,7 @@ class AdminController extends Controller
                                 ->where('student_id', $studentId)
                                 ->get();
 
-        return view('pages.super-admin-result-student-index', compact('results', 'studentSummary', 'student'));
+        return view('pages.super-admin-result-student-index', compact('results', 'studentSummary', 'student', 'season', 'class'));
 
     }
 
@@ -964,9 +1009,12 @@ class AdminController extends Controller
         $studentCount = Student::where('class_id', $request->class_id)->count();
         $studentResults = Result::where('season_id', $request->season_id)
                                 ->where('class_id', $request->class_id)
-                                ->orderBy('subject_id', 'class_id', 'student_id')
+                                ->orderBy('subject_id')
+                                ->orderBy('class_id')
+                                ->orderBy('student_id')
                                 ->take($studentCount)
                                 ->get();
+        return $studentResults;
         foreach ($studentResults as $studentResult) {
             $insertArray[] =  $studentResult->summary($request->season_id, $request->class_id, $studentResult->student_id);
         }

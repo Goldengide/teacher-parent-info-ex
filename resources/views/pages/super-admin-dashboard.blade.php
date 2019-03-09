@@ -115,10 +115,11 @@
               <div class="col-xs-12">
                 <div class="col-in row">
                   <div class="col-xs-12">
-                    <h5 class="counter text-center m-t-15 text-primary"><a href="{{url('super-admin/result/summary')}}">Click to see</a></h5>
+                    <h5 class="counter text-center m-t-15 text-primary"><a href="{{url('super-admin/result/summary/'. $currentSeason->id)}}">Click to see</a></h5>
                   </div>
                   <div class="col-xs-12">
                     <h4 class="text-muted text-center text-info vb">Best Students</h4>
+                    <h5 class="counter text-center m-t-15 text-default">{{$currentSeason->session}}</h5>
                   </div>
                 </div>
               </div>
@@ -133,10 +134,14 @@
               <div class="col-xs-12">
                 <div class="col-in row">
                   <div class="col-xs-12">
-                    @if(!isset($bestStudent))
+                    @if($bestOverallStudent == "")
                       <h3 class="counter text-center m-t-15 text-primary"><a href="{{url('/super-admin/#')}}">??</a></h3>
                     @else
-                      <h3 class="counter text-center m-t-15 text-primary"><a href="{{url('super-admin/teacher/student/'. $bestStudent->id)}}">{{$bestStudent->student_name}}</a></h3>
+                      <h5 class="counter text-center m-t-15 text-primary">
+                        <a href="{{ url('super-admin/student/profile/'. $bestOverallStudent->student_id)}}">
+                          {{$bestOverallStudent->student($bestOverallStudent->student_id)->student_name}}
+                        </a>
+                      </h5>
                     @endif
                   </div>
                   <div class="col-xs-12">

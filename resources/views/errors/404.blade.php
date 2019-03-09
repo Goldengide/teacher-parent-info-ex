@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset("custom-image/logo.png") }}">
-<title>School</title>
+<title>Student Information Exchange</title>
 <!-- Bootstrap Core CSS -->
 <link href="{{ URL::asset("bootstrap/dist/css/bootstrap.min.css") }}" rel="stylesheet">
 <!-- animation CSS -->
@@ -45,8 +45,8 @@
       <h1>404</h1>
       <h3 class="text-uppercase">Page Not Found !</h3>
       <p class="text-muted m-t-30 m-b-30">YOU SEEM TO BE TRYING TO FIND HIS WAY HOME</p>
-      <a href="index.html" class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Back to home</a> </div>
-    <footer class="footer text-center">2016 © Elite Admin.</footer>
+      <a href="{{ url('/login') }}" class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Back</a> </div>
+    <!-- <footer class="footer text-center">2016 © Elite Admin.</footer> -->
   </div>
 </section>
 <!-- jQuery -->

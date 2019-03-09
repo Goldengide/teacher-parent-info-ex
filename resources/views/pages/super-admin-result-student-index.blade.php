@@ -21,7 +21,9 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="white-box">
-            <h3 class="box-title m-b-0">Student: {{ $student->student_name }}</h3>
+            <h3 class="box-title m-b-0">{!! $season->sequenceNumber($season->term_no) !!} Term {{$season->session}} Report Sheet </h3>
+            <h3 class="box-title m-b-0">{{ $student->student_name }}</h3>
+            <h3 class="box-title m-b-0">Class: {{$class->name}}</h3>
             
             @if(Session::has('message'))
 
@@ -62,7 +64,7 @@
                 @else
                   @foreach($results as $result)
                   <tr>
-                    <td>{{$result->student($result->student_id)->student_name}}</td>
+                    <td>{{$result->subject($result->subject_id)->name}}</td>
                     <td>{{$result->assessment}}</td>
                     <td>{{$result->exam_score}}</td>
                     <td>{{intval($result->assessment) + intval($result->exam_score)}}</td>
@@ -80,7 +82,16 @@
           </div>
         </div>
       </div>
+      @if(trim($studentSummary->comment) != "")
       <!-- /.row -->
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="white-box">
+              <span class="text-info">{{$studentSummary->comment}}</span>
+            </div>
+          </div>
+        </div>
+      @endif
 @endsection
 
 @section('other-styles')

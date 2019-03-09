@@ -62,9 +62,11 @@
                 @else
                   @foreach($classes as $class)
                   <tr>
-                    <td><a href="{{ url('super-admin/result/season/'. $season->id. '/class/'. $class->id)}}">{{strtoupper($class->name)}}</a></td>
-                    @if(!isset($results) && empty($results))
+                    @if(isset($results) && !empty($results))
+                      <td><a href="{{ url('super-admin/result/season/'. $season->id. '/class/'. $class->id)}}">{{strtoupper($class->name)}}</a></td>
+                    @else
                       
+                      <td>{{strtoupper($class->name)}}</td>
                       <td>
                         @if($class->teacher_id == 0)
                           <a href="{{ url('/super-admin/classes/assign-teacher/'. $class->id) }}" class="text-primary">Unassigned</a>
@@ -81,6 +83,7 @@
                         <a href="{{url('super-admin/classes/edit/'. $class->id)}}" class="text-primary"><i class="icon icon-pencil"></i></a>
                       
                       </td> 
+                    
                     @endif
                     
                   </tr>

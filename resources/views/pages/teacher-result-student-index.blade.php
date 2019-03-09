@@ -12,7 +12,7 @@
           <ol class="breadcrumb">
             <?php $currentSeason = DB::table('seasons')->where('current', 1)->first(); ?>
             <li><a href="{{ url('super-admin/dashboard')}}">Dashboard</a></li>
-            <li class="active">{{$currentSeason->session}} |{{$currentSeason->term_no}}|</li>
+            <li class="active">{{$currentSeason->session}} |{{($currentSeason->term_no)}}|</li>
           </ol>
         </div>
         <!-- /.col-lg-12 -->
@@ -21,7 +21,9 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="white-box">
-            <h3 class="box-title m-b-0">Student: {{ $student->student_name }}</h3>
+            <h3 class="box-title m-b-0">{!! $season->sequenceNumber($season->term_no) !!} Term {{$season->session}} Report Sheet </h3>
+            <h3 class="box-title m-b-0">{{ $student->student_name }}</h3>
+            <h3 class="box-title m-b-0">Class: {{$class->name}}</h3>
             
             @if(Session::has('message'))
 
@@ -62,7 +64,7 @@
                 @else
                   @foreach($results as $result)
                   <tr>
-                    <td>{{$result->student($result->student_id)->student_name}}</td>
+                    <td>{{$result->subject($result->subject_id)->name}}</td>
                     <td>{{$result->assessment}}</td>
                     <td>{{$result->exam_score}}</td>
                     <td>{{intval($result->assessment) + intval($result->exam_score)}}</td>
@@ -81,6 +83,31 @@
         </div>
       </div>
       <!-- /.row -->
+
+      <!-- /row -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="white-box">
+            <form class="form-material form-horizontal" method="post" action="{{url('teacher/students/add-comment')}}">
+              {{csrf_field()}}
+              <input type="hidden" name="id" value="{{$studentSummary->id}}">
+              <div class="form-group form-horizontal">
+                <label class="col-md-12">Comments<span class="help"> e.g Your Observations, things student should work on</span></label>
+                <div class="col-md-12">
+                  <textarea class="form-control form-control-line" name="comment">{{$studentSummary->comment}}</textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-md btn-success">Submit</button>
+                </div>
+              </div>
+            </form>            
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
+
 @endsection
 
 @section('other-styles')

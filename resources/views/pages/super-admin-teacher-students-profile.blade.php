@@ -49,7 +49,7 @@
             <div class="row">
               <dl class="dl-horizontal">
                 
-                <dt style="text-align: left; white-space: normal;">Parent Name: </dt> <dd><a href="{{ url('/teacher/parent/profile/'. $student->parent($student->parent_name)->id) }}">{{ $student->parent_name }} <i class="icon icon-envelope"></i></a></dd> <br></br>
+                <dt style="text-align: left; white-space: normal;">Parent Name: </dt> <dd><a href="{{ url('/super-admin/parent/profile/'. $student->parent($student->parent_name)->id) }}">{{ $student->parent_name }} <i class="icon icon-envelope"></i></a></dd> <br></br>
 
                 <dt style="text-align: left; white-space: normal;">Phone: </dt> <dd>{{ $student->phone }}</dd> <br><br>
 

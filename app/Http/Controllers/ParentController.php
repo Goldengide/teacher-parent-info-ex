@@ -57,6 +57,8 @@ class ParentController extends Controller
 
     public function viewStudentResult($seasonId, $classId, $studentId) {
         $student = Student::where('id', $studentId)->first();
+        $season = Season::where('id', $seasonId)->first();
+        $class = ClassTable::where('id', $classId)->first();
         $studentSummary = StudentSummary::where('season_id', $seasonId)
                                         ->where('class_id', $classId)
                                         ->where('student_id', $studentId)
@@ -66,7 +68,7 @@ class ParentController extends Controller
                                 ->where('student_id', $studentId)
                                 ->get();
 
-        return view('pages.parent-result-student-index', compact('results', 'studentSummary', 'student'));
+        return view('pages.parent-result-student-index', compact('results', 'studentSummary', 'student', 'class', 'season'));
 
     }
 

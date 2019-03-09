@@ -3849,6 +3849,13 @@ table.focus-on tbody tr.focused td {
   background: url(../plugins/images/error-bg.jpg) no-repeat center center #fff !important;
   width: 100%;
 }
+.error-404{
+   height: 100%;
+  position: fixed;
+  background: url(../custom-image/404.gif) no-repeat center center #fff !important;
+  background-size: cover;
+  width: 100%;
+}
 .error-box .footer {
   width: 100%;
   left: 0px;

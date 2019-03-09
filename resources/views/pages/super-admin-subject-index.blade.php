@@ -30,7 +30,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="white-box">
-            @if(!$isProcessedResult)
+            @if(isset($isProcessedResult) && !$isProcessedResult)
               @if(isset($isAllResultsHasBeenUploadedForEachStudent) && $isAllResultsHasBeenUploadedForEachStudent)
                 <h3 class="box-title m-b-0">
                   <form method="post" action="{{url('super-admin/result/process')}}">
@@ -49,7 +49,7 @@
               <p class="text-muted m-b-30"><a href="{{url('/super-admin/subject/new')}}">Add New Subject</a></p>
             @else
               <p class="text-muted m-b-20">
-                <span class="text-info">Uploaded Result: {{$uploadedSubjectsResult}}/{{$overallSubjects}}</span>
+                <span class="text-info">Uploaded Result: {{$uploadedSubjectsResult}}/{{$subjectCount}}</span>
                 @if(isset($isAllResultsHasBeenUploadedForEachStudent) && $isAllResultsHasBeenUploadedForEachStudent)
                   <span class="text-primary">(Result ready to Process)</span>
                 @else

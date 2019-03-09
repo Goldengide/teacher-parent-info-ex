@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset("custom-image/logo.png") }}">
-<title>School</title>
+<title>Student Information Exchange</title>
 <!-- Bootstrap Core CSS -->
 <link href="{{ URL::asset("bootstrap/dist/css/bootstrap.min.css") }}" rel="stylesheet">
 <!-- animation CSS -->
@@ -45,7 +45,7 @@
       <h1>403</h1>
       <h3 class="text-uppercase">Forbidden Error</h3>
       <p class="text-muted m-t-30 m-b-30 text-uppercase">You don't have permission to access on this server.</p>
-      <a href="{{url('/login')}}" class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Back to home</a> </div>
+      <a href="{{ url('/login') }}" class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Back</a> </div>
     <!-- <footer class="footer text-center">2018 © Sanctuary of Hope Church.</footer> -->
   </div>
 </section>

@@ -8,8 +8,9 @@ class StudentSummary extends Model
 {
     //
     public function getBestStudents($classId, $seasonId) {
+
     	$maxScore = StudentSummary::where('class_id', $classId)->where('season_id', $seasonId)->max('percentage');
-    	$bestStudent = StudentSummary::where('percentage', $maxScore)->where('class_id', $classId)->where('season_id', $seasonId)->get();
+    	$bestStudent = StudentSummary::where('percentage', $maxScore)->where('class_id', $classId)->where('season_id', $seasonId)->first();
     	return $bestStudent;
     }
 

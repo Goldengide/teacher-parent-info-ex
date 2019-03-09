@@ -52,7 +52,7 @@
                 @else
                   @foreach($results as $result)
                   <tr>
-                    <td>{{$result->student($result->student_id)->student_name}}</td>
+                    <td>{{$result->subject($result->subject_id)->name}}</td>
                     <td>{{$result->assessment}}</td>
                     <td>{{$result->exam_score}}</td>
                     <td>
@@ -66,6 +66,30 @@
               </tbody>
             </table>
             </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
+
+      <!-- /row -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="white-box">
+            <form class="form-material form-horizontal" method="post" action="{{url('teacher/students/add-comment')}}">
+              {{csrf_field()}}
+              <input type="hidden" name="id" value="{{$student->id}}">
+              <div class="form-group form-horizontal">
+                <label class="col-md-12">Comments<span class="help"> e.g Awosanmi Awoyelu</span></label>
+                <div class="col-md-12">
+                  <input type="text" class="form-control form-control-line" name="student_name" value="{{$student->sum}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-md btn-success">Submit</button>
+                </div>
+              </div>
+            </form>            
           </div>
         </div>
       </div>

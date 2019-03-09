@@ -62,6 +62,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'teacher'], function() {
 	Route::get('/students/new', 'TeacherController@addStudentPage');
 	Route::post('/students/new', 'TeacherController@addStudentAction');
 
+	Route::get('/students/add-comment', 'TeacherController@addCommentToStudentResult');
+
 	Route::get('/students/edit/{id}', 'TeacherController@updateStudentPage');
 	Route::post('/students/edit', 'TeacherController@updateStudentAction');
 	Route::get('/students/profile/{id}', 'TeacherController@viewStudent');
@@ -111,8 +113,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'super-admin'], function() {
 
 	Route::get('/teacher/new', 'AdminController@newTeacherPage');
 	Route::post('/teacher/add', 'AdminController@newTeacherAction');
-	Route::get('/parent/new', 'AdminController@newParentPage');
-	Route::post('/parent/add', 'AdminController@newParentAction');
+	// Route::get('/parent/new', 'AdminController@newParentPage');
+	// Route::post('/parent/add', 'AdminController@newParentAction');
 
 	Route::get('/teacher/edit/{id}', 'AdminController@updateTeacherPage');
 	Route::post('/teacher/edit', 'AdminController@updateTeacherAction');
@@ -141,7 +143,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'super-admin'], function() {
 	Route::get('/student/edit/{id}', 'AdminController@editStudentPage');
 	Route::post('/student/edit', 'AdminController@editStudentAction');
 	Route::get('/students/grad', 'AdminController@graduatingStudents');
-	Route::get('/students/new', 'AdminController@newStudents');
 
 	Route::get('student/profile/{id}', 'AdminController@studentProfile');
 
@@ -199,8 +200,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'super-admin'], function() {
 	
 	Route::post('/result/process', 'AdminController@processStudentResult');
 
-	Route::get('/result/summary', 'AdminController@resultSummary');
-	Route::get('/result/summary/best', 'AdminController@bestStudents');
+	Route::get('/result/summary/{id}', 'AdminController@resultSummary');
+	Route::get('/result/overall/best', 'AdminController@bestStudents');
 
 	Route::get('/result/student/{seasonId}/{classId}/{studentId}', 'AdminController@viewStudentResult');
 
