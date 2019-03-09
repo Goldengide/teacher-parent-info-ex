@@ -58,7 +58,7 @@
         <nav class="navbar navbar-default navbar-static-top m-b-0">
             <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
                 <div class="top-left-part">
-                    <a class="logo" href="{{url("/teacher/dashbaord")}}"><b>
+                    <a class="logo" href="{{url("/parent/dashbaord")}}"><b>
                         <!-- <img src="{{ URL::asset("plugins/images/eliteadmin-logo.png") }}" alt="home" /></b> -->
                         <!-- <span class="hidden-xs"><img src="{{ URL::asset("plugins/images/eliteadmin-text.png") }}" alt="home" /></span> -->
                         <span class="">PTIE</span><!-- Find a logo for this one -->
@@ -69,8 +69,9 @@
                     
                     <!-- /.dropdown -->
                     <li class="dropdown">
-                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#">
-                        <b class="hidden-xs">{{Auth::user()->fullname}}</b> </a>
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> 
+                            <!-- <img src="{{ URL::asset("plugins/images/users/varun.jpg") }}" alt="user-img" width="36" class="img-circle"> -->
+                            <b class="hidden-xs">{{Auth::user()->firstname}}</b> </a>
                         <ul class="dropdown-menu dropdown-user scale-up">
                             <!-- <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
                             <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
@@ -80,13 +81,16 @@
                             <li role="separator" class="divider"></li> -->
                             <li>
                                 <a href="{{ url('logout') }}"
-                                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                    <i class="fa fa-power-off"></i> Logout</a>
-                                    <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
+                                    onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                                    
+                            </li>
 
                         </ul>
                         <!-- /.dropdown-user -->
@@ -109,16 +113,16 @@
                     </li>
                   
                     <li>
-                        <a href="{{ url('#') }}" class="waves-effect">
-                            <i class="zmdi zmdi-apps zmdi-hc-fw fa-fw"></i> 
-                            <span class="hide-menu">Assessments</span>
+                        <a href="{{ url('parent/dashboard') }}" class="waves-effect">
+                            <i class="ti-user"></i> 
+                            <span class="hide-menu">Child/Children</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('#') }}" class="waves-effect">
+                        <a href="{{ url('/parent/message/compose') }}" class="waves-effect">
                             <i class="icon icon-envelope"></i> 
-                            <span class="hide-menu">Messages 
-                                    <span class="label label-rouded label-danger pull-right">2</span>
+                            <span class="hide-menu">Compose Message 
+                                    <!-- <span class="label label-rouded label-danger pull-right">2</span> -->
 
                             </span>
                         </a>

@@ -66,8 +66,11 @@
                                             ->where('season_id', $season->id)
                                             ->count();
                 ?>
-                @if($checkIfResultIsOut != 0)
-                    <dt style="text-align: left; white-space: normal;"><a href="{{ url('/parent/child/result/'.$child->id)}}">See Result</a></dt> <br></br>
+                <!-- @if($checkIfResultIsOut != 0) -->
+                    <!-- <dt style="text-align: left; white-space: normal;"><a href="{{ url('/parent/child/result/'.$child->id)}}">See Result</a></dt> <br></br> -->
+                <!-- @endif -->
+                @if($isProcessedResult)
+                  <a href="{{ url('parent/result/student/'. $season->id .'/'. $child->class_id .'/'. $child->id) }}">Check Result</a>
                 @endif
 
               </dl>
@@ -85,9 +88,7 @@
 
                 <dt style="text-align: left; white-space: normal;">Email: </dt> <dd>{{ $child->email }}</dd> <br></br>
 
-                @if($isProcessedResult)
-                  <a href="{{ url('parent/result/student/'. $season->id .'/'. $child->class_id .'/'. $child->id) }}">Check Result</a>
-                @endif
+                
               </dl>
             </div>
           </div>

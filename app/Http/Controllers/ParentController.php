@@ -13,15 +13,18 @@ use App\Result;
 use App\ClassTable;
 use App\StudentDetail;
 use Auth;
+use PDF;
 
 class ParentController extends Controller
 {
     //
     public function dashboard() {
+        // return "hi";
         $children = Student::where('parent_name', Auth::user()->fullname)->get();
         $countChildren = Student::where('parent_name', Auth::user()->fullname)->count();
         $season = Season::where('current', true)->first();
         // return $countChildren;
+        // return $children;
         if($countChildren == 1) {
             $child = $children[0];
             $processedResult = StudentSummary::where('class_id', $child->class_id)->where('season_id', $season->id)->count();
@@ -138,6 +141,26 @@ class ParentController extends Controller
         $adminPhone = User::where('role', 'admin')->first()->phone;
         // $adminPhone = implode(',', $adminPhone);
         return view('pages.parent-message-compose', compact('adminPhone'));
+    }
+
+    public function pdfview($seasonId, $classId, $studentId) {
+        $class = ClassTable::where('id', $classId)->first();
+        $season = Season::where('id', $seasonId)->first();
+        $student = Student::where('id', $studentId)->first();
+        $summary = StudentSummary::where('student_id', $studentId)->where('season_id', $seasonId)->first();
+        $resultObject = Result::where('season_id', $seasonId)->where('class_id', $student->class_id)->where('student_id', $studentId);
+        $results = $resultObject->orderBy('subject_id')->get();$seasonId = Season::where('current', true)->first()->id;
+        $student = Student::where('id', $studentId)->first();
+        $studentSummary = StudentSummary::where('student_id', $studentId)->where('season_id', $seasonId)->first();
+        $resultObject = Result::where('season_id', $seasonId)->where('class_id', $student->class_id)->where('student_id', $studentId);
+        $results = $resultObject->orderBy('subject_id')->get();
+        // return [$results, $summary, $student, $class, $season];
+        
+
+        $pdf = PDF::loadView('pages.parent-result-student-index', compact('results', 'studentSummary', 'student', 'class', 'season'));
+        // return $pdf;
+        return $pdf->download('pdfview.pdf');
+        // return view('pdfview');
     }
 
    

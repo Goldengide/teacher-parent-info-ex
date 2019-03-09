@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth', 'can:parent'], 'prefix' => 'parent'], fun
 	Route::post('/child/profile/pics', 'ParentController@profilePicsUpdateAction');
 	Route::get('/teacher/profile/{id}', 'ParentController@teacherProfile');
 	Route::get('/result/student/{seasonId}/{classId}/{studentId}', 'ParentController@viewStudentResult');
+	Route::get('/result/student/{seasonId}/{classId}/{studentId}/{studentName}.pdf','ParentController@pdfview');
 	
 	Route::group(['prefix' => 'message'], function() {
 		Route::post('/send', 'SMSController@sendteacherMessage');
@@ -52,7 +53,7 @@ Route::group(['middleware' => ['auth', 'can:parent'], 'prefix' => 'parent'], fun
 
 
 # Teachers module
-Route::group(['middleware' => 'auth', 'prefix' => 'teacher'], function() {
+Route::group(['middleware' => ['auth', 'can:teacher'], 'prefix' => 'teacher'], function() {
 
 	Route::get('/dashboard', 'TeacherController@dashboard');
 	Route::get('/students/all', 'TeacherController@students');
