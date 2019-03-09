@@ -65,7 +65,7 @@
                 @else
                   @foreach($results as $result)
                   <tr>
-                    <td>{{$result->student($result->student_id)->student_name}}</td>
+                    <td>{{$result->subject($result->subject_id)->name}}</td>
                     <td>{{$result->assessment}}</td>
                     <td>{{$result->exam_score}}</td>
                     <td>{{ $result->total }}</td>
@@ -85,13 +85,13 @@
       </div>
       <!-- /.row -->
 
-      @if(trim($studentSummary->comment) != "")
+      @if(trim($studentSummary->comments) != "")
         <!-- row -->
         <div class="row">
           <div class="col-sm-12">
             <div class="white-box">
-              <h3>Teacher Comments</h3>
-              <span class="text-info">{{$studentSummary->comment}}</span>
+              <h3>Teacher's Comment</h3>
+              <span class="text-default">{{$studentSummary->comments}}</span>
             </div>
           </div>
         </div>

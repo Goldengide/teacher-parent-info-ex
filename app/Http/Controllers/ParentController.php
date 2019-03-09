@@ -84,7 +84,7 @@ class ParentController extends Controller
 
     }
 
-    public function logAComplaintToThePoprietor() {}
+
     public function viewChildResult($id) {
 
         $seasonId = Season::where('current', true)->first()->id;
@@ -95,11 +95,13 @@ class ParentController extends Controller
         // return $results;
         return view('pages.parent-students-result-index', compact('results', 'summary', 'student'));
     }
-    // public function message() {}
+
     public function profilePicsUpdatePage($id) {
         $student = Student::where('id', $id)->first();
         return view('pages.parent-student-upload-pics', compact('student')); 
     }
+
+    
     public function profilePicsUpdateAction(Request $request) {
 
         $id = $request->id;
