@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Redirect::intended("http://localhost/PTIE/index.html");
+
 });
 
 

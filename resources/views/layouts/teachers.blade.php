@@ -61,8 +61,6 @@
             <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
                 <div class="top-left-part">
                     <a class="logo" href="{{url("/teacher/dashbaord")}}"><b>
-                        <!-- <img src="{{ URL::asset("plugins/images/eliteadmin-logo.png") }}" alt="home" /></b> -->
-                        <!-- <span class="hidden-xs"><img src="{{ URL::asset("plugins/images/eliteadmin-text.png") }}" alt="home" /></span> -->
                         <span class="">PTIE</span><!-- Find a logo for this one -->
                     </a>
                 </div>
@@ -73,15 +71,9 @@
                     <!-- /.dropdown -->
                     <li class="dropdown">
                         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> 
-                            <!-- <img src="{{ URL::asset("plugins/images/users/varun.jpg") }}" alt="user-img" width="36" class="img-circle"> -->
+                            
                             <b class="hidden-xs">{{Auth::user()->firstname}}</b> </a>
                         <ul class="dropdown-menu dropdown-user scale-up">
-                            <!-- <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                            <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                            <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
-                            <li role="separator" class="divider"></li> -->
                             <li>
                                 <a href="{{ url('logout') }}"
                                     onclick="event.preventDefault();
