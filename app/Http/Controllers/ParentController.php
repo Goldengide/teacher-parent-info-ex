@@ -160,6 +160,7 @@ class ParentController extends Controller
         $pdf = PDF::loadView('pages.parent-result-student-index', compact('results', 'studentSummary', 'student', 'class', 'season'));
         // return $pdf;
         return $pdf->download('pdfview.pdf');
+        set_time_limit(300);
         // return view('pdfview');
     }
 
