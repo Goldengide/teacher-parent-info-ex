@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
 use Illuminate\Http\Request;
 use Auth;
-
 class LoginController extends Controller
 {
     /*
@@ -28,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/teacher/dashboard';
 
     /**
      * Create a new controller instance.
@@ -37,8 +35,9 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest', ['except' => 'logout']);
     }
+
 
     public function loginPost(Request $request) {
         if(Auth::attempt(['phone'=>$request->input('phone'), 'password'=>$request->input('password') ]))
@@ -70,7 +69,5 @@ class LoginController extends Controller
         }
     }
 
-    public function loginPage() {
-        return view('auth.login');
-    }
+    // public function login
 }
