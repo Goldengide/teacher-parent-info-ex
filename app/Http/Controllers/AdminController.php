@@ -26,6 +26,11 @@ class AdminController extends Controller
     	$noOfStudents = Student::count();
     	$noOfTeachers = User::where('role', 'teacher')->count();
         $season = Season::where('current', 1)->first();
+        $checkSeason = Season::where('current', 1)->count();
+        // return $checkSeason;
+        if($checkSeason == 0) {
+            return redirect()->to('/super-admin/seasons');
+        }
         $countClassSummary = ClassSummary::count();
         $countStudentSummary = StudentSummary::count();
         if($countClassSummary > 0) {
