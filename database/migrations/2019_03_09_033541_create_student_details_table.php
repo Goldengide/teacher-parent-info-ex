@@ -15,11 +15,11 @@ class CreateStudentDetailsTable extends Migration
     {
         Schema::create('student_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('student_id');
-            $table->integer('teacher_id');
-            $table->integer('subject_id');
-            $table->integer('class_id');
-            $table->tinyInteger('exceptional_subject');
+            $table->integer('student_id')->default(0);
+            $table->integer('teacher_id')->default(0);
+            $table->integer('subject_id')->default(0);
+            $table->integer('class_id')->default(0);
+            $table->tinyInteger('exceptional_subject')->default(0);
             $table->integer('season_id');
             $table->timestamps();
         });

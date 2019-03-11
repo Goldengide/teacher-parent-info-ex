@@ -15,7 +15,7 @@ class CreateClassTablesTable extends Migration
     {
         Schema::create('class_tables', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('about')->nullable();
             $table->integer('teacher_id')->default(0);
             $table->timestamps();

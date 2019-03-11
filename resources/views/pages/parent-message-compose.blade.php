@@ -9,7 +9,7 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
            <ol class="breadcrumb">
             <?php $currentSeason = DB::table('seasons')->where('current', 1)->first(); ?>
-            <li><a href="{{ url('teacher/dashboard')}}">Dashboard</a></li>
+            <li><a href="{{ url('parent/dashboard')}}">Dashboard</a></li>
             <!-- <li><a href="{{ url('/teacher/students')}}"><i class="ti-back-left"></i>see all Students</a></li> -->
             <li class="active">{{$currentSeason->session}} |{{($currentSeason->term_no)}}|</li>
           </ol>

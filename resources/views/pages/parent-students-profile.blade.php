@@ -9,10 +9,10 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
           <ol class="breadcrumb">
             
-              <!-- <li><a href="{{ url('/parent/dashboard')}}">Dashboard</a></li> -->
+              <li><a href="{{ url('/parent/dashboard')}}">Dashboard</a></li>
             @if($countChildren > 1)
               
-              <li><a href="{{ url('/parent/children')}}">Back to the Student's List</a></li>
+              <li><a href="{{ url('/parent/children')}}">see all Children</a></li>
             
             @endif
             

@@ -15,8 +15,8 @@ class CreateSeasonsTable extends Migration
     {
         Schema::create('seasons', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('session');
-            $table->string('term_no');
+            $table->string('session')->nullable();
+            $table->string('term_no')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('current')->default(0);
             $table->tinyInteger('started')->default(0);

@@ -15,13 +15,13 @@ class CreateStudentSummariesTable extends Migration
     {
         Schema::create('student_summaries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('class_id');
-            $table->integer('student_id');
-            $table->integer('season_id');
-            $table->integer('percentage');
-            $table->string('best_score');
-            $table->string('worse_score');
-            $table->string('comments');
+            $table->integer('class_id')->default(0);
+            $table->integer('student_id')->default(0);
+            $table->integer('season_id')->default(0);
+            $table->integer('percentage')->default(0);
+            $table->string('best_score')->nullable();
+            $table->string('worse_score')->nullable();
+            $table->string('comments')->nullable();
             $table->timestamps();
         });
     }

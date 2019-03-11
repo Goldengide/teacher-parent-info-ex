@@ -15,13 +15,13 @@ class CreateClassSummariesTable extends Migration
     {
         Schema::create('class_summaries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('class_id');
-            $table->integer('subject_id');
-            $table->integer('season_id');
-            $table->integer('average_performance');
-            $table->integer('best_performance');
-            $table->integer('lowest_performance');
-            $table->text('comment');
+            $table->integer('class_id')->default(0);
+            $table->integer('subject_id')->default(0);
+            $table->integer('season_id')->default(0);
+            $table->integer('average_performance')->default(0);
+            $table->integer('best_performance')->default(0);
+            $table->integer('lowest_performance')->default(0);
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }

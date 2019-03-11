@@ -745,6 +745,7 @@ class AdminController extends Controller
         else {
             $isProcessedResult = false;
         }
+        // return dd($isProcessedResult);
 
         if ($overallSubjects == $uploadedSubjectsResult && $overallSubjects == $subjectCount ) {
             $isAllResultsHasBeenUploadedForEachStudent = 1;
@@ -1019,7 +1020,7 @@ class AdminController extends Controller
                                 ->orderBy('student_id')
                                 ->take($studentCount)
                                 ->get();
-        return $studentResults;
+        // return $studentResults;
         foreach ($studentResults as $studentResult) {
             $insertArray[] =  $studentResult->summary($request->season_id, $request->class_id, $studentResult->student_id);
         }
