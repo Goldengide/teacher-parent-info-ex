@@ -108,12 +108,12 @@ class ParentController extends Controller
         $student = Student::find($id);
         $file = $request->file('photo');
 
+        if($request->hasFile('photo')) {
         $previousFilename = $file->getClientOriginalName();
         $filename = $request->email ."_". $request->student_name .".". explode(".", $previousFilename)[count(explode(".", $previousFilename)) - 1];
 
 
 
-        if($request->hasFile('photo')) {
             if ($file->isValid()) {
                 
                 if($file->move('uploads/images' , $filename)) {
@@ -122,6 +122,9 @@ class ParentController extends Controller
                 }
 
             }
+        }
+        else {
+            return redirect()->back()->with(['message'=>"You didn't choose your picture", 'style' =>'alert-danger']);
         }
         $isSaved = $student->save();
 

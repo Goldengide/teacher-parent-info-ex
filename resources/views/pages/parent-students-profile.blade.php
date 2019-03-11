@@ -26,6 +26,24 @@
         <div class="col-sm-12 col-md-3">
           <div class="white-box p-l-20 p-r-20">
             <div class="row">
+              @if(count($errors) > 0)
+
+              <ul class="alert alert-danger">
+
+                  @foreach($errors->all() as $error)
+
+                     <li>{{$error}}</li>
+
+                  @endforeach
+              </ul>
+
+            @endif
+            
+            @if(Session::has('message'))
+
+              <p class="{{session('style')}}">{{session('message')}}</p>
+
+            @endif
               <dl class="dl-horizontal">
                 <dt style="text-align: center; white-space: normal;">
                   <img src="{{ URL::asset('uploads/images/'. $child->img_url)}}" class="img-responsive img-center img-circle" align="center" >
