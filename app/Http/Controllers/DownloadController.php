@@ -9,6 +9,10 @@ use App\StudentDetail;
 use App\Student;
 use App\ClassTable;
 use App\Subject;
+use App\Season;
+use App\StudentSummary;
+use App\Result;
+use PDF;
 
 class DownloadController extends Controller
 {
@@ -81,6 +85,28 @@ class DownloadController extends Controller
                     ->header('Content-Type', 'text/csv')
                     ->header('Content-type', 'application/force-download')
                     ->header('X-Header-One', 'Header Value'); 
+    }
+
+
+    public function downloadResultInPDFFormat($seasonId, $classId, $studentId) {
+        $class = ClassTable::where('id', $classId)->first();
+        $season = Season::where('id', $seasonId)->first();
+        $student = Student::where('id', $studentId)->first();
+        $summary = StudentSummary::where('student_id', $studentId)->where('season_id', $seasonId)->first();
+        $resultObject = Result::where('season_id', $seasonId)->where('class_id', $student->class_id)->where('student_id', $studentId);
+        $results = $resultObject->orderBy('subject_id')->get();$seasonId = Season::where('current', true)->first()->id;
+        $student = Student::where('id', $studentId)->first();
+        $studentSummary = StudentSummary::where('student_id', $studentId)->where('season_id', $seasonId)->first();
+        $resultObject = Result::where('season_id', $seasonId)->where('class_id', $student->class_id)->where('student_id', $studentId);
+        $results = $resultObject->orderBy('subject_id')->get();
+        // return [$results, $summary, $student, $class, $season];
+        
+
+        $pdf = PDF::loadView('pages.pdf-result-student-index', compact('results', 'studentSummary', 'student', 'class', 'season'));
+        // return view('pages.pdf-result-student-index', compact('results', 'studentSummary', 'student', 'class', 'season'));
+        // return $pdf;
+        return $pdf->download( $student->student_name. '.pdf');
+        set_time_limit(300);
     }
 
     

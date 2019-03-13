@@ -30,6 +30,8 @@ Route::get('/about', 'HomeController@index');
 // Route::get('/login', 'Auth\LoginController@loginPage');
 // Route::post('/login', 'Auth\LoginController@loginPost');
 Route::post('/logina', 'Auth\LoginController@loginPost');
+Route::get('/change-password', 'AdminController@changePasswordPage')->middleware('auth');
+Route::post('/change-password', 'AdminController@changePassword')->middleware('auth');
 
 
 # Parent Module
@@ -43,7 +45,7 @@ Route::group(['middleware' => ['auth', 'can:parent'], 'prefix' => 'parent'], fun
 	Route::post('/child/profile/pics', 'ParentController@profilePicsUpdateAction');
 	Route::get('/teacher/profile/{id}', 'ParentController@teacherProfile');
 	Route::get('/result/student/{seasonId}/{classId}/{studentId}', 'ParentController@viewStudentResult');
-	Route::get('/result/student/{seasonId}/{classId}/{studentId}/{studentName}.pdf','ParentController@pdfview');
+	Route::get('/result/student/{seasonId}/{classId}/{studentId}/{studentName}.pdf','DownloadController@downloadResultInPDFFormat');
 	
 	Route::group(['prefix' => 'message'], function() {
 		Route::post('/send', 'SMSController@sendteacherMessage');
@@ -88,6 +90,8 @@ Route::group(['middleware' => ['auth', 'can:teacher'], 'prefix' => 'teacher'], f
 	Route::post('/result/edit', 'TeacherController@editResultAction');
 
 	Route::get('/result/student/view/{id}/{seasonId}', 'TeacherController@viewResultForStudent');
+	Route::get('/result/student/{seasonId}/{classId}/{studentId}/{studentName}.pdf','DownloadController@downloadResultInPDFFormat');
+
 
 	
 	Route::get('/parents', 'TeacherController@parents');
@@ -117,7 +121,6 @@ Route::group(['middleware' => ['auth', 'can:super-admin'], 'prefix' => 'super-ad
 
 	Route::get('/teacher/new', 'AdminController@newTeacherPage');
 	Route::post('/teacher/add', 'AdminController@newTeacherAction');
-	// Route::get('/parent/new', 'AdminController@newParentPage');
 	// Route::post('/parent/add', 'AdminController@newParentAction');
 
 	Route::get('/teacher/edit/{id}', 'AdminController@updateTeacherPage');
@@ -149,6 +152,10 @@ Route::group(['middleware' => ['auth', 'can:super-admin'], 'prefix' => 'super-ad
 	Route::get('/students/grad', 'AdminController@graduatingStudents');
 
 	Route::get('student/profile/{id}', 'AdminController@studentProfile');
+	
+
+	Route::get('/result/student/{seasonId}/{classId}/{studentId}/{studentName}.pdf','DownloadController@downloadResultInPDFFormat');
+
 
 
 	// Classes Upload 

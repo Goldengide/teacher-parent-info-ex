@@ -73,12 +73,13 @@
                             <!-- <img src="{{ URL::asset("plugins/images/users/varun.jpg") }}" alt="user-img" width="36" class="img-circle"> -->
                             <b class="hidden-xs">{{Auth::user()->firstname}}</b> </a>
                         <ul class="dropdown-menu dropdown-user scale-up">
-                            <!-- <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+                            <!-- li><a href="#"><i class="ti-user"></i> My Profile</a></li>
                             <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
                             <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
-                            <li role="separator" class="divider"></li> -->
+                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li> -->
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ url('/change-password')}}"><i class="ti-settings"></i> Change Password</a></li>
                             <li>
                                 <a href="{{ url('logout') }}"
                                     onclick="event.preventDefault();

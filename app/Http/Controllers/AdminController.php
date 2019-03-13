@@ -1098,6 +1098,24 @@ class AdminController extends Controller
 
 
 
+    public function changePasswordPage() {
+        return view('auth.passwords.change-password');
+    }
+    public function changePassword(Request $request) {
+        $user = User::find(Auth::user()->id);
+        $user->password = bcrypt($request->password);
+        $user->save();
+        $link = "<a href=". url('/login'). " class=\"btn btn-sm btn-info \"> To Dashboard</a>";
+        if($user) {
+            return redirect()->back()->with(["message" => "Password Successfully Changed  $link", 'style' => 'alert-success']);
+        }
+        else {
+            return redirect()->back()->with(['message' => 'Ooops! Something just Happenend', 'style' => 'alert-danger']);
+        } 
+    }
+    
+
+
 
 }
 

@@ -52,6 +52,8 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{{ url('/change-password')}}"><i class="ti-settings"></i> Change Password</a></li>
                                     <li>
                                         <a href="{{ url('logout') }}"
                                             onclick="event.preventDefault();

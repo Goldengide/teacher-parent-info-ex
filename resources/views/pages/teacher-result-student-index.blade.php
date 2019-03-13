@@ -22,6 +22,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="white-box">
+            <h3 class="box-title m-b-0"><a href="{{ url('/teacher/result/student/'.$season->id.'/'.$class->id. '/'.$student->id. '/'. $student->student_name.'.pdf')}}">Download PDF</a></h3>
             <h3 class="box-title m-b-0">{!! $season->sequenceNumber($season->term_no) !!} Term {{$season->session}} Report Sheet </h3>
             <h3 class="box-title m-b-0">{{ $student->student_name }}</h3>
             <h3 class="box-title m-b-0">Class: {{$class->name}}</h3>

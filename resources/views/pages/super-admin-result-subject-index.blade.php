@@ -66,7 +66,9 @@
                        
                       @if(!empty($subject->result($class->id, $subject->id, $season->id)))
                         <span class="text-default">[{{$subject->result($class->id, $subject->id, $season->id)->times_uploaded}}]</span>
+                        @if([{{$subject->result($class->id, $subject->id, $season->id)->times_uploaded}}] > 0)
                        | <a href="{{url('teacher/result/view/' .$season->id. '/'. $class->id. '/' .$subject->id )}}" class="text-info" title="View Result"><i class="icon icon-eye"></i></a>
+                       @endif
                       @endif
                     </td> 
                     

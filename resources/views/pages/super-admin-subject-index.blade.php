@@ -96,7 +96,9 @@
                         
                         @if($subject->result($class->id, $subject->id, $season->id)->times_uploaded > 0)
                           <span class="text-default">[{{$subject->result($class->id, $subject->id, $season->id)->times_uploaded}}]  |</span>
-                          <a href="{{url('super-admin/result/view/' .$season->id. '/'. $class->id. '/' .$subject->id )}}" class="text-info" title="View Result"><i class="icon icon-eye"></i></a>
+                          @if($subject->result($class->id, $subject->id, $season->id)->times_uploaded > 0)
+                            <a href="{{url('super-admin/result/view/' .$season->id. '/'. $class->id. '/' .$subject->id )}}" class="text-info" title="View Result"><i class="icon icon-eye"></i></a>
+                          @endif
                         @else
                           Not yet Uploaded
                         @endif
