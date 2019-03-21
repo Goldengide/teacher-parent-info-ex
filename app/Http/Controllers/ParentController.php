@@ -106,11 +106,12 @@ class ParentController extends Controller
 
         $id = $request->id;
         $student = Student::find($id);
+        $studentInfo = Student::where('id', $id)->first();
         $file = $request->file('photo');
 
         if($request->hasFile('photo')) {
         $previousFilename = $file->getClientOriginalName();
-        $filename = $request->email ."_". $request->student_name .".". explode(".", $previousFilename)[count(explode(".", $previousFilename)) - 1];
+        $filename = $studentInfo->email ."_". $studentInfo->student_name .".". explode(".", $previousFilename)[count(explode(".", $previousFilename)) - 1];
 
 
 

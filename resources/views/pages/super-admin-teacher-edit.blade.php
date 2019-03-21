@@ -72,6 +72,12 @@
                       <input type="text" class="form-control"  name="phone" placeholder="Phone here" value="{{$teacher->phone}}">
                     </div>
                   </div>
+                  <div class="form-group">
+                    <label class="col-md-12">Phone Number 2</label>
+                    <div class="col-md-12">
+                      <input type="text" class="form-control"  name="phone" placeholder="Phone here" value="{{$teacher->phone2}}">
+                    </div>
+                  </div>
 
                   <div class="form-group">
                     <label class="col-md-12">Email</label>

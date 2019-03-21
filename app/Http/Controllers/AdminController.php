@@ -519,7 +519,7 @@ class AdminController extends Controller
     	$user->othernames = $request->othernames;
     	$user->email = $request->email;
     	$user->phone = $request->phone;
-    	// $user->phone2 = $request->phone2;
+    	$user->phone2 = $request->phone2;
     	$isSaved = $user->save();
     	if($isSaved) {
     		return redirect()->back()->with(['message'=> 'Teacher Update Successful', 'style' => 'alert-success']);
@@ -532,9 +532,9 @@ class AdminController extends Controller
     }
 
     public function newTeacherPage() {
-    	return view('pages.super-admin-teacher-new');
+    	return view('pages.super-admin-teacher-add');
     }
-    public function newTecherAction(Request $request) {
+    public function newTeacherAction(Request $request) {
     	$user = new User;
     	$user->firstname = $request->firstname;
     	$user->lastname = $request->lastname;

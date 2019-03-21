@@ -4,13 +4,13 @@
     <div class="container-fluid">
       <div class="row bg-title">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-          <h4 class="page-title">Edit {{$teacher->firstname}} Info</h4>
+          <h4 class="page-title">Add Teacher</h4>
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
           <ol class="breadcrumb">
             <li><a href="{{ url('/super-admin/dashboard')}}">Dashboard</a></li>
-            <li><a href="{{ url('/super-admin/teachers')}}">Back to the Teacher's List</a></li>
-            <li class="active"> {{$teacher->firstname}} </li>
+            <li><a href="{{ url('/super-admin/teachers')}}">see Teachers</a></li>
+            <li class="active"> Add Teacher </li>
           </ol>
         </div>
         <!-- /.col-lg-12 -->
@@ -41,42 +41,48 @@
 
             <div class="row">
               <div class="col-md-12">
-                <form class="form-material form-horizontal" method="post" action="{{url('super-admin/teacher/new')}}">
+                <form class="form-material form-horizontal" method="post" action="{{url('super-admin/teacher/add')}}">
                   {{csrf_field()}}
-                  <input type="hidden" name="id" value="{{$teacher->id}}">
 
                   <div class="form-group">
                     <label class="col-md-12">Surname<span class="help"> e.g Awosanmi</span></label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control form-control-line" name="lastname" value="{{$teacher->lastname}}">
+                      <input type="text" class="form-control form-control-line" name="lastname">
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label class="col-md-12">First Name<span class="help"> e.gAwoyelu</span></label>
+                    <label class="col-md-12">First Name<span class="help"> e.g Awoyelu</span></label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control form-control-line" name="firstname" value="{{$teacher->firstname}}">
+                      <input type="text" class="form-control form-control-line" name="firstname">
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label class="col-md-12">Other names<span class="help"> e.g Taiwo</span></label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control form-control-line" name="othernames" value="{{$teacher->othernames}}">
+                      <input type="text" class="form-control form-control-line" name="othernames">
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label class="col-md-12">Phone Number</label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control"  name="phone" placeholder="Phone here" value="{{$teacher->phone}}">
+                      <input type="text" class="form-control"  name="phone" placeholder="Phone here">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-md-12">Phone Number 2</label>
+                    <div class="col-md-12">
+                      <input type="text" class="form-control"  name="phone2" placeholder="Phone here">
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label class="col-md-12">Email</label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control"  name="email" placeholder="Email here" value="{{$teacher->email}}">
+                      <input type="text" class="form-control"  name="email" placeholder="Email here">
                     </div>
                   </div>
 
