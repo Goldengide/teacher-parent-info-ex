@@ -90,8 +90,8 @@
                     <label class="col-md-12">Class</label>
                     <div class="col-md-12">
                       <select class="form-control" name="class_id">
-                        @foreach ($classes as class)
-                          <option id="{{ $class->id }}">{{ $class->name }}</option>
+                        @foreach ($classes as $class)
+                          <option id="{{ $class->id }}">{{ strtoupper($class->name) }}</option>
                         @endforeach
                       </select>
                     </div>

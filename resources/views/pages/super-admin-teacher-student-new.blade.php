@@ -98,7 +98,7 @@
                   <div class="form-group">
                     <div class="col-md-12">
                       <button type="submit" class="btn btn-lg btn-success">Submit</button>
-                      <a href="{{url('/teacher/students')}}" class="btn btn-lg btn-outline btn-default">Go Back</a>
+                      <a href="{{url('/teacher/students/all')}}" class="btn btn-lg btn-outline btn-default">Go Back</a>
                     </div>
                   </div>
                 </form>

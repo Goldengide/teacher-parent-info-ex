@@ -52,7 +52,7 @@
                 <form class="form-material form-horizontal" method="post" action="{{url('super-admin/classes/new')}}">
                   {{csrf_field()}}
                   <div class="form-group">
-                    <label class="col-md-12">Class<span class="help"> e.g J5</span></label>
+                    <label class="col-md-12">Class<span class="help"> e.g 5J</span></label>
                     <div class="col-md-12">
                       <input type="text" class="form-control form-control-line" name="name">
                     </div>

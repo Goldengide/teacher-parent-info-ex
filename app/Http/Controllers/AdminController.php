@@ -46,11 +46,11 @@ class AdminController extends Controller
         }
 
         if($countStudentSummary > 0) {
-            $overallMaxScore = StudentSummary::where('class_id', $class->id)
-                                        ->where('season_id', $season->id)
-                                        ->max('percentage');
+            $overallMaxScore = StudentSummary::where('season_id', $season->id)
+                                            // ->where('class_id', $class->id)
+                                            ->max('percentage');
             $bestOverallStudent = StudentSummary::where('percentage', $overallMaxScore)
-                                    ->where('class_id', $class->id)
+                                    // ->where('class_id', $class->id)
                                     ->where('season_id', $season->id)
                                     ->first();
         }
@@ -307,12 +307,13 @@ class AdminController extends Controller
         $student->phone = $request->phone;
         $student->gender = $request->gender;
         $student->email = $request->email;
-        $student->class_id = $request->class;
+        $student->class_id = $request->class_id;
         $student->save();
         if ($student) {
             $parent = new User;
             $parent->fullname = $request->parent_name;
             $parent->phone = $request->phone;
+            $parent->password = bcrypt($request->phone);
             $parent->email = $request->email;
             $parent->save();
             return redirect()->back()->with(['message' => "Student has been added", 'style' => "alert-success"]);
@@ -336,7 +337,7 @@ class AdminController extends Controller
         $student->phone = $request->phone;
         $student->gender = $request->gender;
         $student->phone = $request->phone;
-        $student->class_id = $request->class;
+        $student->class_id = $request->class_id;
         $student->save();
         if ($student) {
             return redirect()->back()->with(['message' => "Student Info has been Updated", 'style' => "alert-success"]);
@@ -509,7 +510,8 @@ class AdminController extends Controller
 
     public function updateTeacherPage($id) {
     	$teacher = User::where('id', $id)->first();
-    	return view('pages.super-admin-teacher-edit', compact('teacher'));
+        $classes = ClassTable::all();
+    	return view('pages.super-admin-teacher-edit', compact('teacher', 'classes'));
     }
     public function updateTeacherAction(Request $request) {
     	$id = $request->id;
@@ -541,7 +543,8 @@ class AdminController extends Controller
     	$user->role = 'teacher';
     	$user->othernames = $request->othernames;
     	$user->email = $request->email;
-    	$user->phone = $request->phone;
+        $user->phone = $request->phone;
+    	$user->password = bcrypt($request->lastname);
     	$user->phone2 = $request->phone2;
     	$isSaved = $user->save();
     	if($isSaved) {
@@ -586,9 +589,9 @@ class AdminController extends Controller
 
         foreach ($students as $student) {
             $userPresent = User::where('phone', $student->phone)->count();
-
+            $password = explode(" ", $student->parent_name)[1];
             if($userPresent == 0) {
-                DB::table('users')->insert(['fullname' => $student->parent_name, 'phone' => $student->phone, 'phone2' => $student->phone2, 'email' => $student->email, 'password' => bcrypt($student->phone), 'role' => 'parent']);
+                DB::table('users')->insert(['fullname' => $student->parent_name, 'phone' => $student->phone, 'phone2' => $student->phone2, 'email' => $student->email, 'password' => bcrypt($password), 'role' => 'parent']);
             }
 
             else {
@@ -1071,10 +1074,10 @@ class AdminController extends Controller
     }
     public function assignTeacherClassAction(Request $request) {
         $teacherId = $request->id;
-
+        // return $teacherId;
         $class = ClassTable::find($request->class_id);
         $class->teacher_id = $teacherId;
-        $updateStudentDetails = DB::table('student_details')->where('class_id', $request->class_id)->update(['teacher_id' => $request->teacherId]);
+        $updateStudentDetails = DB::table('student_details')->where('class_id', $request->class_id)->update(['teacher_id' => $request->id]);
         $isSaved = $class->save();
         if ($isSaved) {
             return redirect()->back()->with(['message' => $class->teacher($teacherId)->firstname.' has been assigned to Class '. strtoupper($class->name) , 'style' => 'alert-success']);
