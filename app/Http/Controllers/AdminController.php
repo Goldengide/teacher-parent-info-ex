@@ -276,6 +276,8 @@ class AdminController extends Controller
                         }
 
                     }
+                    $checkClass = ClassTable::count();
+                    if($checkClass>0) {ClassTable::truncate();}
 
                     $operationUpload  = DB::table("class_tables")->insert($dataUpload);
 
@@ -305,6 +307,7 @@ class AdminController extends Controller
         $student->parent_name = $request->parent_name;
         $student->student_name = $request->student_name;
         $student->phone = $request->phone;
+        $password = explode(" ", $student->parent_name)[1];
         $student->gender = $request->gender;
         $student->email = $request->email;
         $student->class_id = $request->class_id;
@@ -313,7 +316,7 @@ class AdminController extends Controller
             $parent = new User;
             $parent->fullname = $request->parent_name;
             $parent->phone = $request->phone;
-            $parent->password = bcrypt($request->phone);
+            $parent->password = bcrypt(strtolower($password));
             $parent->email = $request->email;
             $parent->save();
             return redirect()->back()->with(['message' => "Student has been added", 'style' => "alert-success"]);
@@ -517,7 +520,9 @@ class AdminController extends Controller
     	$id = $request->id;
     	$user = User::find($id);
     	$user->firstname = $request->firstname;
-    	$user->lastname = $request->lastname;
+        $user->lastname = $request->lastname;
+        // return strtolower($request->lastname);
+    	$user->password = bcrypt(strtolower($request->lastname));
     	$user->othernames = $request->othernames;
     	$user->email = $request->email;
     	$user->phone = $request->phone;
@@ -591,7 +596,7 @@ class AdminController extends Controller
             $userPresent = User::where('phone', $student->phone)->count();
             $password = explode(" ", $student->parent_name)[1];
             if($userPresent == 0) {
-                DB::table('users')->insert(['fullname' => $student->parent_name, 'phone' => $student->phone, 'phone2' => $student->phone2, 'email' => $student->email, 'password' => bcrypt($password), 'role' => 'parent']);
+                DB::table('users')->insert(['fullname' => $student->parent_name, 'phone' => $student->phone, 'phone2' => $student->phone2, 'email' => $student->email, 'password' => bcrypt(strtolower($password)), 'role' => 'parent']);
             }
 
             else {

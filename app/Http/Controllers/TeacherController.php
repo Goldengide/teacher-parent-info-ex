@@ -53,10 +53,16 @@ class TeacherController extends Controller
     }
 
     public function studentsByClass() {
-    	$class = ClassTable::where('teacher_id', Auth::user()->id)->first();
+        $class = ClassTable::where('teacher_id', Auth::user()->id)->first();
+    	$check = ClassTable::where('teacher_id', Auth::user()->id)->count();
         // WE have to catch errors for Teachers that have not been assigned
-    	$students = Student::where("class_id", $class->id)->get();
-    	return view('pages.teacher-students-index', compact('students', 'class'));
+        if(!$check) {
+            return redirect()->to('/teacher/dashboard');
+        }
+        else{
+            $students = Student::where("class_id", $class->id)->get();
+            return view('pages.teacher-students-index', compact('students', 'class'));
+        }
     }
     
 

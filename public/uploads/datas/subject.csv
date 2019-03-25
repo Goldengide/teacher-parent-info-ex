@@ -1,11 +1,8 @@
 SN, name, short_name
 1, English Language, Eng
 2, Mathematics, Maths
-3, Physical Education, Phy. Edu
-4, Computer, Comp
-5, Music,  Mus
-6, French, Fre
-7, Fine Art, F. Art
-8, Elementary, El.Sc
-9, Yoruba, Yor
-10, Civic, Civ
+3, Computer, Comp
+4, Elementary Science, El.Sc
+5, Yoruba, Yor
+6, Civic, Civ
+7,Christian Religious Studies, C.R.S

@@ -75,7 +75,7 @@
                   <div class="form-group">
                     <label class="col-md-12">Phone Number 2</label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control"  name="phone" placeholder="Phone here" value="{{$teacher->phone2}}">
+                      <input type="text" class="form-control"  name="phone2" placeholder="Phone here" value="{{ $teacher->phone2}}">
                     </div>
                   </div>
 
