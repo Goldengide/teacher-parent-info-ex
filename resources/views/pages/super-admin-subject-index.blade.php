@@ -22,7 +22,10 @@
               <li class="active">---</li>
               
             @else
-              <?php $currentSeason = DB::table('seasons')->where('current', 1)->first(); ?>
+              <?php 
+                $currentSeason = DB::table('seasons')->where('current', 1)->first(); 
+                $currentSeasonStatus = $currentSeason->status;
+              ?>
               <li class="active">{{$currentSeason->session}} |{{$currentSeason->term_no}}|</li>
             @endif
           </ol>
@@ -47,9 +50,8 @@
             @endif
             <h3 class="box-title m-b-0">Subjects</h3>
             @if(!isset($results) || empty($results))
-              
-              <p class="text-muted m-b-30"><a href="{{url('/super-admin/subject/upload')}}">Upload Subjects</a></p>
-              <p class="text-muted m-b-30"><a href="{{url('/super-admin/subject/new')}}">Add New Subject</a></p>
+                <p class="text-muted m-b-30"><a href="{{url('/super-admin/subject/upload')}}">Upload Subjects</a></p>
+                <p class="text-muted m-b-30"><a href="{{url('/super-admin/subject/new')}}">Add New Subject</a></p>
             @else
               <p class="text-muted m-b-20">
                 <span class="text-info">Uploaded Result: {{$uploadedSubjectsResult}}/{{$subjectCount}}</span>

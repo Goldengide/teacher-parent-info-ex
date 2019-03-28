@@ -179,7 +179,7 @@ class TeacherController extends Controller
     public function prepareResult() {}
 
     public function addStudentPage() {
-        $classes = ClassTable::all();
+        $classes = ClassTable::where('teacher_id', Auth::user()->id)->get();
     	return view('pages.teacher-students-add', compact('classes'));
     }
 
@@ -195,9 +195,16 @@ class TeacherController extends Controller
     	$isSaved = $student->save();
 
     	if ($isSaved) {
+            $parent = new User;
+            $parent->fullname = $request->parent_name;
+            $parent->phone = $request->phone;
+            $password = explode(" ", $request->parent_name)[1];
+            // return $password;
+            $parent->password = bcrypt(strtolower($password));
+            $parent->email = $request->email;
+            $parent->save();
             $season = Season::where('current', true)->first();
             $subjects = Subject::all();
-            $classes = ClassTable::all();
             $studentDetails = array();
             $eachDetails = array();
             foreach ($subjects as $subject) {
@@ -257,7 +264,19 @@ class TeacherController extends Controller
 
     public function parents() {
         // weneedto adjust this code to be able to display parent due to class
-        $parents = User::where('role', 'parent')->get();
+        $class = ClassTable::where('teacher_id', Auth::user()->id)->first();
+        $checkclass = ClassTable::where('teacher_id', Auth::user()->id)->count();
+        // return $class;
+        if($checkclass == 0) {
+            $parents = [];
+        }
+        else {
+            $parents = Student::where('class_id', $class->id)->get();
+
+        }
+        // $parents = User::where('role', 'parent')->get();
+        // $parent_name = "Mr. |Shotayo Shoyelu Kura";
+        // return $parents[0]->parent($parents[1]->parent_name);
         return view('pages.teacher-parent-index', compact('parents'));
     }
 
@@ -289,8 +308,14 @@ class TeacherController extends Controller
         $subjects = Subject::all();
         $season = Season::where('current', 1)->first();
         $class = ClassTable::where('teacher_id', Auth::user()->id)->first();
-        // return $subject->result($class->id, $subject->id, $season->id);
-        return view('pages.teacher-subjects-index', compact('subjects', 'class', 'season'));
+        $checkClass = ClassTable::where('teacher_id', Auth::user()->id)->count();
+        if($checkClass == 0) {
+            return redirect('/teacher/parents')->with(['message'=> 'You can\'t do anything with result now because you have not been assigned to a Class', 'style' => 'text-warning']);
+        }
+        else {
+            // return $subject->result($class->id, $subject->id, $season->id);
+            return view('pages.teacher-subjects-index', compact('subjects', 'class', 'season'));
+        }
     }
 
     public function uploadResult($seasonId, $classId, $subjectId) {
@@ -388,6 +413,7 @@ class TeacherController extends Controller
         $subject = Subject::where('id', $subjectId)->first();
         $class = ClassTable::where('id', $classId)->first();
         $results = Result::where('season_id', $seasonId)->where('class_id', $classId)->where('subject_id', $subjectId)->get();
+
         return view('pages.teacher-result-index', compact('results', 'subject', 'class'));
     }
 

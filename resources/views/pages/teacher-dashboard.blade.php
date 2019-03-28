@@ -49,7 +49,7 @@
                     </div>
                   @else
                     <div class="col-xs-12">
-                      <h3 class="counter text-center m-t-15 text-primary"><a href="javascript::void()">No student Yet</a></h3>
+                      <h6 class="counter text-center m-t-15 text-primary"><a href="javascript::void()">Class not Assigned Yet</a></h6>
                     </div>
                     <div class="col-xs-12">
                       <h4 class="text-muted text-center text-info vb">Upload Result</h4>

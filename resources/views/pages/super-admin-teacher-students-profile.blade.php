@@ -8,8 +8,8 @@
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
           <ol class="breadcrumb">
-            <li><a href="{{ url('/teacher/dashboard')}}">Dashboard</a></li>
-            <li><a href="{{ url('/teacher/student')}}">Back to the Student's List</a></li>
+            <li><a href="{{ url('/super-admin/dashboard')}}">Dashboard</a></li>
+            <li><a href="{{ url('/super-admin/student')}}">Back to the Student's List</a></li>
             <li class="active"> {{ $student->student_name }} </li>
           </ol>
         </div>
@@ -38,8 +38,11 @@
 
                 <dt style="text-align: left; white-space: normal;">Class: </dt> <dd>{{ strtoupper($student->classTable($student->class_id)->name) }}</dd> <br></br>
 
-                <dt style="text-align: left; white-space: normal;">Teacher </dt> <dd>{{ $student->classTable($student->class_id)->teacher($student->classTable($student->class_id)->teacher_id)->fullname }}</dd> <br></br>
-
+                @if($student->classTable($student->class_id)->teacher_id)
+                  <dt style="text-align: left; white-space: normal;">Teacher </dt> <dd>{{ $student->classTable($student->class_id)->teacher($student->classTable($student->class_id)->teacher_id)->fullname }}</dd> <br></br>
+                @else 
+                  <dt style="text-align: left; white-space: normal;">Teacher </dt> <dd> Teacher has not been assigned</dd> <br></br>
+                @endif
               </dl>
             </div>
           </div>

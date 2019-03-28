@@ -23,8 +23,7 @@ class ParentController extends Controller
         $children = Student::where('parent_name', Auth::user()->fullname)->get();
         $countChildren = Student::where('parent_name', Auth::user()->fullname)->count();
         $season = Season::where('current', true)->first();
-        // return $countChildren;
-        // return $children;
+
         if($countChildren == 1) {
             $child = $children[0];
             $processedResult = StudentSummary::where('class_id', $child->class_id)->where('season_id', $season->id)->count();
@@ -37,7 +36,7 @@ class ParentController extends Controller
             return view('pages.parent-students-profile', compact('child', 'countChildren', 'isProcessedResult', 'season'));
         }
         else if($countChildren > 1) {
-            return view('pages.parent-students-index', compact('children', 'countChildren'));
+            return view('pages.parent-student-index', compact('children', 'countChildren'));
         }
 
         else {
@@ -54,10 +53,12 @@ class ParentController extends Controller
     public function viewChild($studentId) {
         $season = Season::where('current', 1)->first();
         $seasonId = $season->id;
-        $result = $StudentSummary::where('student_id', $studentId)->where('season_id', $seasonId)->count();
+        // return $student;
+        $result = StudentSummary::where('student_id', $studentId)->where('season_id', $seasonId)->count();
         $countChildren = Student::where('parent_name', Auth::user()->fullname)->count();
-        $child = Student::where('student_id', $studentId);
-        $processedResult = StudentSummary::where('class_id', $student->class_id)->where('season_id', $season->id)->count();
+        $child = Student::where('id', $studentId)->first();
+        // return $child
+        $processedResult = StudentSummary::where('class_id', $child->class_id)->where('season_id', $season->id)->count();
         if($processedResult > 0) {
             $isProcessedResult = true;
         }
@@ -140,7 +141,7 @@ class ParentController extends Controller
     public function children() {
         $children = Student::where('parent_name', Auth::user()->fullname)->get();
         $countChildren = Student::where('parent_name', Auth::user()->fullname)->count();
-        return view('pages.parent-students-index', compact('children', 'countChildren'));
+        return view('pages.parent-student-index', compact('children', 'countChildren'));
     }
 
     public function sendAdminMessagePage(){

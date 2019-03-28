@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::get('/welcome', 'HomeController@index');
+Route::get('/welcome', 'HomeController@indexf');
 Route::get('/about', 'HomeController@index');
 // Route::get('/login', 'Auth\LoginController@loginPage');
 // Route::post('/login', 'Auth\LoginController@loginPost');
@@ -49,7 +49,7 @@ Route::group(['middleware' => ['auth', 'can:parent'], 'prefix' => 'parent'], fun
 	
 	Route::group(['prefix' => 'message'], function() {
 		Route::post('/send', 'SMSController@sendteacherMessage');
-		Route::get('/compose', 'TeacherController@sendAdminMessagePage');
+		Route::get('/compose', 'ParentController@sendAdminMessagePage');
 	});
 
 });

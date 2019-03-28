@@ -28,10 +28,10 @@ class DownloadController extends Controller
     public function classTemplate() {
     	$csvContent = array();
 		$csvContent[] = "sn, name";
-		$csvContent[] = "1, 2J";
-		$csvContent[] = "2, 3J";
-		$csvContent[] = "3, 4J";
-		$csvContent[] = "4, 5J";
+		$csvContent[] = "1, 1A";
+		$csvContent[] = "2, 1B";
+		$csvContent[] = "3, 1C";
+		$csvContent[] = "4, 2A";
 		return $this->downloadTemplate($csvContent);
     }
     public function subjectTemplate() {
@@ -57,9 +57,9 @@ class DownloadController extends Controller
     public function studentTemplate() {
         $csvContent = array();
         $csvContent[] = "sn, parent_name, student_name, Sex, class, email, phone, phone2, birthdate";
-        $csvContent[] = "1, Mr. & Mrs.|AMOWOGBAJE Gideon Ifedayo, AMOWOGBAJE Eunice Babalola, male, 5J, amowogbajegideon@gmail.com, 08174007780, 07045673242, Sep-4";
-        $csvContent[] = "1, Mr. & Mrs.|AMOWOGBAJE Gideon Ifedayo, AMOWOGBAJE Aina Babamuda, female, 5J, amowogbajegideon@gmail.com, 08174007780, 07045673242, Sep-4";
-        $csvContent[] = "1, Mr. & Mrs.|AMOWOGBAJE Gideon Ifedayo, AMOWOGBAJE Aina Babamuda, male, 5J, amowogbajegideon@gmail.com, 08174007780, 07045673242, Sep-4";
+        $csvContent[] = "1, Mr. & Mrs.| AMOWOGBAJE Gideon Ifedayo, AMOWOGBAJE Eunice Babalola, male, 5J, amowogbajegideon@gmail.com, 08174007780, 07045673242, Sep-4";
+        $csvContent[] = "1, Mr. & Mrs.| AMOWOGBAJE Gideon Ifedayo, AMOWOGBAJE Aina Babamuda, female, 5J, amowogbajegideon@gmail.com, 08174007780, 07045673242, Sep-4";
+        $csvContent[] = "1, Mr. & Mrs.| AMOWOGBAJE Gideon Ifedayo, AMOWOGBAJE Aina Babamuda, male, 5J, amowogbajegideon@gmail.com, 08174007780, 07045673242, Sep-4";
         return $this->downloadTemplate($csvContent);
     }
 

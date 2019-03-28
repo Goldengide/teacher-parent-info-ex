@@ -1,4 +1,4 @@
-@extends('layouts.teachers')
+@extends('layouts.parent')
 @section('content')
   <!-- Page Content -->
   <div id="page-wrapper">
@@ -44,8 +44,8 @@
                 </tr>
               </tfoot>
               <tbody> <?php $sn = 0 ?>
-                @if(count($parents) < 1)
-                  <td colspan="5">No teacher data has been uploaded so far. Please upload</td>
+                @if(count($children) < 1)
+                  <td colspan="5">---</td>
                 @else
                   @foreach($children as $child)
                   <tr>  <?php $sn++; ?>
@@ -53,7 +53,6 @@
                     <td>{{$child->student_name}}</td>
                     <td>
                       <a href="{{url('parent/child/profile/'. $child->id)}}" class="text-primary"><i class="icon icon-eye"></i></a>
-                      <!-- <a href="{{url('super-admin/parent/edit/'. $parent->id)}}" class="text-primary"><i class="icon icon-pencil"></i></a> -->
                     </td> 
                     
                   </tr>

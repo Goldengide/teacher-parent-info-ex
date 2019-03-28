@@ -70,11 +70,17 @@
 
                 <dt style="text-align: left; white-space: normal;">Class: </dt> <dd>{{ strtoupper($child->classTable($child->class_id)->name) }}</dd> <br></br>
 
-                <dt style="text-align: left; white-space: normal;">Teacher </dt> <dd> {{ ($child->classTable($child->class_id)->teacher($child->classTable($child->class_id)->teacher_id)->fullname) }}
-                  <a href="{{url('/parent/teacher/profile/'. $child->classTable($child->class_id)->teacher($child->classTable($child->class_id)->teacher_id)->id)}}">
-                    <i class="icon icon-user"></i> 
-                    <i class="icon icon-envelope"></i>
-                  </a>
+                <dt style="text-align: left; white-space: normal;">Teacher </dt> 
+                <dd> 
+                  @if($child->classTable($child->class_id)->teacher_id == 0)
+                    No teacher Assigned to this class
+                  @else
+                    {{ ($child->classTable($child->class_id)->teacher($child->classTable($child->class_id)->teacher_id)->fullname) }}
+                    <a href="{{url('/parent/teacher/profile/'. $child->classTable($child->class_id)->teacher($child->classTable($child->class_id)->teacher_id)->id)}}">
+                      <i class="icon icon-user"></i> 
+                      <i class="icon icon-envelope"></i>
+                    </a>
+                  @endif
                 </dd> <br></br>
                 <?php 
 
@@ -100,7 +106,7 @@
             <div class="row">
               <dl class="dl-vertical">
                 
-                <dt style="text-align: left; white-space: normal;">My Name: </dt> <dd><a href="{{ url('/teacher/parent/profile/'. $child->parent($child->id)) }}">{{ $child->parent_name }}</a></dd> <br></br>
+                <dt style="text-align: left; white-space: normal;">My Name: </dt> <dd>{{ $child->parent_name }}</dd> <br></br>
 
                 <dt style="text-align: left; white-space: normal;">Phone: </dt> <dd>{{ $child->phone }}</dd> <br><br>
 

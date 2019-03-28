@@ -48,16 +48,16 @@
               </tfoot>
               <tbody> <?php $sn = 0 ?>
                 @if(count($parents) < 1)
-                  <td colspan="5">No teacher data has been uploaded so far. Please upload</td>
+                  <td colspan="5">You have not been assigned to any class or your class doesn't have students.</td>
                 @else
                   @foreach($parents as $parent)
                   <tr>  <?php $sn++; ?>
                     <td>{{$sn}}</td>
-                    <td>{{$parent->fullname}}</td>
+                    <td>{{$parent->parent_name}}</td>
                     <td>{{$parent->email}}</td>
                     <td>{{$parent->phone}}</td>
                     <td>
-                      <a href="{{url('teacher/parent/profile/'. $parent->id)}}" class="text-primary"><i class="icon icon-user"></i></a>
+                      <a href="{{url('teacher/parent/profile/'. $parent->parent($parent->parent_name)->id)}}" class="text-primary"><i class="icon icon-user"></i></a>
                       <!-- <a href="{{url('super-admin/parent/edit/'. $parent->id)}}" class="text-primary"><i class="icon icon-pencil"></i></a> -->
                     </td> 
                     

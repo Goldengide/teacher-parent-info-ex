@@ -38,7 +38,14 @@
 
                 <dt style="text-align: left; white-space: normal;">Class: </dt> <dd>{{ strtoupper($student->classTable($student->class_id)->name) }}</dd> <br></br>
 
-                <dt style="text-align: left; white-space: normal;">Teacher </dt> <dd>{{ $student->classTable($student->class_id)->teacher($student->classTable($student->class_id)->teacher_id)->fullname }}</dd> <br></br>
+                <dt style="text-align: left; white-space: normal;">Teacher </dt> 
+                <dd>
+                  @if($student->classTable($student->class_id)->teacher_id == 0)
+                    {{"No teacher Assigned to this class yet"}}
+                  @else
+                    {{ $student->classTable($student->class_id)->teacher($student->classTable($student->class_id)->teacher_id)->fullname }}
+                  @endif
+                </dd> <br></br>
 
               </dl>
             </div>

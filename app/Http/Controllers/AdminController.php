@@ -53,10 +53,18 @@ class AdminController extends Controller
                                     // ->where('class_id', $class->id)
                                     ->where('season_id', $season->id)
                                     ->first();
+
         }
         else {
             $bestOverallStudent = "";
         }
+        $classIds = StudentSummary::pluck('class_id')->unique()->all();
+        $studentSummariesCount = StudentSummary::where('season_id', $season->id)
+                                ->orderBy('student_id')
+                                ->orderBy('class_id')
+                                ->take(count($classIds))
+                                ->count();
+            // return $studentSummariesCount;
 
 
         // $findBestStudent = StudentSummary::where('')->get()
@@ -64,7 +72,7 @@ class AdminController extends Controller
 
 
 
-    	return view('pages.super-admin-dashboard', compact('noOfStudents', 'noOfTeachers', 'mostEffectiveTeacher', 'bestOverallStudent', 'season'));
+    	return view('pages.super-admin-dashboard', compact('noOfStudents', 'noOfTeachers', 'mostEffectiveTeacher', 'bestOverallStudent', 'season', 'countStudentSummary', 'studentSummariesCount'));
     }
 
     // public function index
@@ -102,8 +110,8 @@ class AdminController extends Controller
                             $dataColumns['role'] = 'teacher'; 
                             // $dataColumns['password'] = bcrypt(trim(strtolower($contentSubArray[1]))); 
                             $dataColumns['password'] = bcrypt(trim(strtolower($contentSubArray[1]))); 
-                            $dataColumns['phone'] = "0".$contentSubArray[4]; 
-                            $dataColumns['phone2'] = "0".$contentSubArray[5]; 
+                            $dataColumns['phone'] = "0".trim($contentSubArray[4]); 
+                            $dataColumns['phone2'] = "0".trim($contentSubArray[5]); 
                             $dataColumns['email'] = $contentSubArray[6]; 
                             $dataColumns['birthdate'] = $contentSubArray[7]; 
                             $dataUpload[] = $dataColumns;
@@ -131,6 +139,7 @@ class AdminController extends Controller
 
 
     public function parents()  {
+        // return User::where('role', 'parent')->get();
         $currentSeasonExist = Season::where('current', 1)->where('status', 1)->count();
         if (!$currentSeasonExist) {
             return redirect('/super-admin/seasons')->with(['message' => 'You can only view Parent if you activate  and launch the Season', 'style' => 'alert-info']);
@@ -314,12 +323,18 @@ class AdminController extends Controller
         $student->save();
         if ($student) {
             $parent = new User;
-            $parent->fullname = $request->parent_name;
+            $parent->fullname = "Mr.| ".$request->parent_name;
             $parent->phone = $request->phone;
+            $parent->role = "parent";
             $parent->password = bcrypt(strtolower($password));
             $parent->email = $request->email;
             $parent->save();
-            return redirect()->back()->with(['message' => "Student has been added", 'style' => "alert-success"]);
+            if($parent->save()) {
+                return redirect()->back()->with(['message' => "Student has been added", 'style' => "alert-success"]);
+            }
+            else {
+                return redirect()->back()->with(['message' => "Ooops! Something went wrong", 'style' => "alert-danger"]);
+            }
         }
         else {
             return redirect()->back()->with(['message' => "Ooops! Something went wrong", 'style' => "alert-danger"]);
@@ -791,12 +806,18 @@ class AdminController extends Controller
                                 ->orderBy('class_id')
                                 ->take(count($classIds))
                                 ->get();
+        $studentSummariesCount = StudentSummary::where('season_id', $seasonId)
+                                ->orderBy('student_id')
+                                ->orderBy('class_id')
+                                ->take(count($classIds))
+                                ->count();
+
 
         foreach ($studentSummaries as $studentSummary) {
             $bestStudents[] = $studentSummary->getBestStudents($studentSummary->class_id, $studentSummary->season_id);
         }
         // return $bestStudents;
-        return view('pages.super-admin-best-students', compact('bestStudents'));
+        return view('pages.super-admin-best-students', compact('bestStudents', 'studentSummariesCount'));
     }
 
     public function bestStudents() {

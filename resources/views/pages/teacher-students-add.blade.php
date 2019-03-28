@@ -71,14 +71,13 @@
                   <div class="form-group">
                     <label class="col-md-12">Class</label>
                     <div class="col-md-12">
-                      <select class="form-control" name="class_id">
+                      <select class="form-control" name="class_id" required>
                         @foreach ($classes as $class)
-                          <option value="{{$class->id}}">{{strtoupper($class->name)}}</option>
+                          <option value="{{$class->id}}" selected>{{strtoupper($class->name)}}</option>
                         @endforeach
                       </select>
                     </div>
                   </div>
-                  
                   <div class="form-group">
                     <div class="col-md-12">
                       <button type="submit" class="btn btn-lg btn-success">Submit</button>
