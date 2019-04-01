@@ -21,18 +21,8 @@
       @endif
       <form class="form-horizontal form-material" id="loginform" method="POST" action="{{ route('register') }}">
         {{ csrf_field() }}
-        <a href="javascript:void(0)" class="text-center db"><img src="{{URL::asset("plugins/images/eliteadmin-logo-dark.png")}}" alt="Home" /><br/><img src="{{URL::asset("plugins/images/eliteadmin-text-dark.png") }}" alt="Home" /></a> 
         <h3 class="box-title m-t-40 m-b-0">Register Now</h3><small>Create your account and enjoy</small> 
-        <div class="form-group m-t-20">
-          <div class="col-xs-12">
-            <input class="form-control" type="text" name="firstname" placeholder="Firstname">
-          </div>
-        </div>
-        <div class="form-group m-t-20">
-          <div class="col-xs-12">
-            <input class="form-control" type="text" name="lastname" required="" placeholder="Lastname">
-          </div>
-        </div>
+        
         <div class="form-group ">
           <div class="col-xs-12">
             <input class="form-control" type="text" name="email" required="" placeholder="Email">

@@ -24,12 +24,12 @@
         <h3 class="box-title m-b-20">Sign In</h3>
         <div class="form-group">
           <div class="col-xs-12">
-            <input class="form-control" name="password" type="text" required="" placeholder="Password">
+            <input class="form-control" name="password" type="text" required="" placeholder="Phone">
           </div>
         </div>
         <div class="form-group">
           <div class="col-xs-12">
-            <input class="form-control" name="phone" type="password" required="" placeholder="Phone">
+            <input class="form-control" name="phone" type="password" required="" placeholder="Password">
           </div>
         </div>
         <div class="form-group">
